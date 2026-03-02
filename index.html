@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flota de Autos</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-left">
+      <h1><span class="icon">🚗</span> Flota de Autos</h1>
+      <p>4 vehículos registrados</p>
+    </div>
+    <button class="btn-primary" onclick="agregarAuto()">+ Agregar Auto</button>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-icon" style="color:#22c55e">✅</span>
+      <div><div class="stat-value">2</div><div class="stat-label">Operativos</div></div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon" style="color:#f59e0b">🔧</span>
+      <div><div class="stat-value">1</div><div class="stat-label">En mantenimiento</div></div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon" style="color:#ef4444">⚠️</span>
+      <div><div class="stat-value">1</div><div class="stat-label">Fuera de servicio</div></div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('graficos', this)">Gráficos</button>
+    <button class="tab" onclick="switchTab('lista', this)">Lista de Autos</button>
+  </div>
+
+  <!-- GRÁFICOS VIEW -->
+  <div id="graficos-view">
+    <div class="charts-row">
+      <div class="card">
+        <h3>Estado General de la Flota</h3>
+        <canvas id="donutChart" height="220"></canvas>
+        <div class="donut-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div> Operativo</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div> Mantenimiento</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div> Fuera de servicio</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Salud Promedio por Componente</h3>
+        <canvas id="barChart" height="220"></canvas>
+      </div>
+    </div>
+
+    <div class="card fuel-card">
+      <h3>Nivel de Combustible por Auto</h3>
+      <canvas id="fuelChart" height="130"></canvas>
+    </div>
+
+    <div>
+      <div class="individual-title">Estado Individual por Auto</div>
+      <div class="autos-grid">
+        <div class="auto-card">
+          <h4>Auto 01</h4>
+          <p>ABC-1234 · Toyota Corolla</p>
+          <canvas id="radar1" height="180"></canvas>
+        </div>
+        <div class="auto-card">
+          <h4>Auto 02</h4>
+          <p>XYZ-5678 · Chevrolet Spark</p>
+          <canvas id="radar2" height="180"></canvas>
+        </div>
+        <div class="auto-card">
+          <h4>Auto 03</h4>
+          <p>DEF-9012 · Honda Civic</p>
+          <canvas id="radar3" height="180"></canvas>
+        </div>
+        <div class="auto-card" style="grid-column:1;">
+          <h4>Auto 04</h4>
+          <p>GHI-3456 · Ford Ranger</p>
+          <canvas id="radar4" height="180"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LISTA VIEW -->
+  <div id="list-view">
+    <div class="autos-list">
+      <div class="auto-row">
+        <div class="auto-row-info"><h4>Auto 01 – Toyota Corolla</h4><p>ABC-1234</p></div>
+        <span class="status-badge badge-operativo">Operativo</span>
+        <div class="fuel-bar-wrap">
+          <div class="fuel-bar-bg"><div class="fuel-bar-fill" style="width:75%;background:#22c55e"></div></div>
+          <span class="fuel-text">75%</span>
+        </div>
+      </div>
+      <div class="auto-row">
+        <div class="auto-row-info"><h4>Auto 02 – Chevrolet Spark</h4><p>XYZ-5678</p></div>
+        <span class="status-badge badge-mantenimiento">En mantenimiento</span>
+        <div class="fuel-bar-wrap">
+          <div class="fuel-bar-bg"><div class="fuel-bar-fill" style="width:30%;background:#f59e0b"></div></div>
+          <span class="fuel-text">30%</span>
+        </div>
+      </div>
+      <div class="auto-row">
+        <div class="auto-row-info"><h4>Auto 03 – Honda Civic</h4><p>DEF-9012</p></div>
+        <span class="status-badge badge-operativo">Operativo</span>
+        <div class="fuel-bar-wrap">
+          <div class="fuel-bar-bg"><div class="fuel-bar-fill" style="width:90%;background:#22c55e"></div></div>
+          <span class="fuel-text">90%</span>
+        </div>
+      </div>
+      <div class="auto-row">
+        <div class="auto-row-info"><h4>Auto 04 – Ford Ranger</h4><p>GHI-3456</p></div>
+        <span class="status-badge badge-fuera">Fuera de servicio</span>
+        <div class="fuel-bar-wrap">
+          <div class="fuel-bar-bg"><div class="fuel-bar-fill" style="width:10%;background:#ef4444"></div></div>
+          <span class="fuel-text">10%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

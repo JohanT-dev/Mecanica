@@ -1,0 +1,76 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f8; color: #222; padding: 32px; min-height: 100vh; }
+
+/* HEADER */
+.header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 28px; }
+.header-left h1 { font-size: 2rem; font-weight: 800; display: flex; align-items: center; gap: 12px; }
+.header-left h1 .icon { font-size: 1.8rem; }
+.header-left p { color: #888; margin-top: 4px; font-size: 0.95rem; }
+.btn-primary { background: #6c5ce7; color: #fff; border: none; padding: 12px 22px; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+.btn-primary:hover { background: #5a4bd1; }
+
+/* STATS */
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+.stat-card { background: #fff; border-radius: 16px; padding: 24px 28px; display: flex; align-items: center; gap: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.stat-icon { font-size: 1.8rem; }
+.stat-value { font-size: 2rem; font-weight: 800; }
+.stat-label { color: #888; font-size: 0.9rem; }
+
+/* TABS */
+.tabs { display: flex; gap: 0; margin-bottom: 24px; }
+.tab { padding: 10px 26px; border-radius: 50px; border: 1.5px solid #ddd; background: #fff; font-size: 0.95rem; cursor: pointer; font-weight: 500; color: #555; transition: all 0.2s; }
+.tab.active { background: #6c5ce7; color: #fff; border-color: #6c5ce7; }
+.tab:first-child { margin-right: 8px; }
+
+/* CARDS & CHARTS */
+.charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+.card { background: #fff; border-radius: 18px; padding: 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 20px; }
+.fuel-card { margin-bottom: 20px; }
+
+/* INDIVIDUAL AUTOS */
+.individual-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
+.autos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.auto-card { background: #fff; border-radius: 18px; padding: 22px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.auto-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
+.auto-card p { font-size: 0.82rem; color: #aaa; margin-bottom: 12px; }
+
+/* DONUT LEGEND */
+.donut-legend { display: flex; gap: 20px; margin-top: 12px; justify-content: center; flex-wrap: wrap; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; }
+.legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+/* LIST VIEW */
+#list-view { display: none; }
+.autos-list { display: flex; flex-direction: column; gap: 12px; }
+.auto-row { background: #fff; border-radius: 14px; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.auto-row-info h4 { font-weight: 700; }
+.auto-row-info p { color: #aaa; font-size: 0.85rem; }
+.status-badge { padding: 5px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; }
+.badge-operativo { background: #d4f5e2; color: #1a9e56; }
+.badge-mantenimiento { background: #fff0d0; color: #d97706; }
+.badge-fuera { background: #ffe0e0; color: #dc2626; }
+.fuel-bar-wrap { display: flex; align-items: center; gap: 10px; width: 140px; }
+.fuel-bar-bg { background: #f0f2f8; border-radius: 50px; height: 8px; flex: 1; overflow: hidden; }
+.fuel-bar-fill { height: 8px; border-radius: 50px; }
+.fuel-text { font-size: 0.85rem; font-weight: 600; width: 36px; text-align: right; }
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 640px) {
+  body { padding: 16px; }
+  .header { flex-direction: column; gap: 14px; }
+  .btn-primary { width: 100%; justify-content: center; }
+  .header-left h1 { font-size: 1.5rem; }
+  .stats-grid { grid-template-columns: 1fr; gap: 10px; }
+  .stat-card { padding: 16px 18px; }
+  .stat-value { font-size: 1.6rem; }
+  .tabs { width: 100%; }
+  .tab { flex: 1; text-align: center; padding: 10px 8px; font-size: 0.9rem; }
+  .charts-row { grid-template-columns: 1fr; }
+  .card { padding: 18px; }
+  .autos-grid { grid-template-columns: 1fr; }
+  .auto-card { grid-column: auto !important; }
+  .auto-row { flex-direction: column; align-items: flex-start; gap: 10px; padding: 16px; }
+  .fuel-bar-wrap { width: 100%; }
+  .individual-title { font-size: 1rem; }
+}
