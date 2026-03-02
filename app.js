@@ -1,3 +1,6 @@
+JS
+Copiar
+
 // DONUT - Estado General de la Flota
 new Chart(document.getElementById('donutChart'), {
   type: 'doughnut',
@@ -110,5 +113,5 @@ function switchTab(tab, el) {
 
 // Agregar auto
 function agregarAuto() {
-  alert('Funcionalidad: Agregar Auto');
+  window.location.href = 'agregar-auto.html';
 }
