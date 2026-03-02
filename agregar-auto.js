@@ -1,3 +1,14 @@
+// Color dinámico en selects de documentación
+function colorDoc(sel) {
+  sel.className = 'doc-select val-' + sel.value;
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.doc-select').forEach(sel => {
+    colorDoc(sel);
+    sel.addEventListener('change', () => colorDoc(sel));
+  });
+});
+
 // Actualizar slider visual
 function updateSlider(id) {
   const input = document.getElementById(id);

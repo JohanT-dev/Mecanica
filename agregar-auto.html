@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Agregar Auto - Flota de Autos</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="agregar-auto.css">
 </head>
+
 <body>
 
   <div class="page-header">
@@ -15,108 +17,119 @@
     <p>Completa los datos del nuevo vehículo</p>
   </div>
 
-  <div class="form-container">
+    <div class="form-container">
 
-    <div class="form-section">
-      <h2>Información General</h2>
-      <div class="form-grid">
-        <div class="field">
-          <label for="nombre">Nombre del Auto</label>
-          <input type="text" id="nombre" placeholder="Ej: Auto 05">
-        </div>
-        <div class="field">
-          <label for="placa">Placa</label>
-          <input type="text" id="placa" placeholder="Ej: JKL-7890">
-        </div>
-        <div class="field">
-          <label for="marca">Marca</label>
-          <input type="text" id="marca" placeholder="Ej: Toyota">
-        </div>
-        <div class="field">
-          <label for="modelo">Modelo</label>
-          <input type="text" id="modelo" placeholder="Ej: Corolla">
-        </div>
-        <div class="field">
-          <label for="anio">Año</label>
-          <input type="number" id="anio" placeholder="Ej: 2022" min="1990" max="2030">
-        </div>
-        <div class="field">
-          <label for="color">Color</label>
-          <input type="text" id="color" placeholder="Ej: Blanco">
+      <div class="form-section">
+        <h2>Información General</h2>
+        <div class="form-grid">
+          <div class="field">
+            <label for="nombre">Nombre del Auto</label>
+            <input type="text" id="nombre" placeholder="Ej: Auto 05">
+          </div>
+          <div class="field">
+            <label for="placa">Placa</label>
+            <input type="text" id="placa" placeholder="Ej: JKL-7890">
+          </div>
+          <div class="field">
+            <label for="marca">Marca</label>
+            <input type="text" id="marca" placeholder="Ej: Toyota">
+          </div>
+          <div class="field">
+            <label for="modelo">Modelo</label>
+            <input type="text" id="modelo" placeholder="Ej: Corolla">
+          </div>
+          <div class="field">
+            <label for="anio">Año</label>
+            <input type="number" id="anio" placeholder="Ej: 2022" min="1990" max="2030">
+          </div>
+          <div class="field">
+            <label for="color">Color</label>
+            <input type="text" id="color" placeholder="Ej: Blanco">
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-section">
-      <h2>Estado Operativo</h2>
-      <div class="status-options">
-        <label class="status-option operativo">
-          <input type="radio" name="estado" value="operativo" checked>
-          <span class="status-icon">✅</span>
-          <span class="status-label">Operativo</span>
-        </label>
-        <label class="status-option mantenimiento">
-          <input type="radio" name="estado" value="mantenimiento">
-          <span class="status-icon">🔧</span>
-          <span class="status-label">En mantenimiento</span>
-        </label>
-        <label class="status-option fuera">
-          <input type="radio" name="estado" value="fuera">
-          <span class="status-icon">⚠️</span>
-          <span class="status-label">Fuera de servicio</span>
-        </label>
-      </div>
-    </div>
+      <div class="form-section">
+        <h2>Uso y Documentación</h2>
 
-    <div class="form-section">
-      <h2>Nivel de Componentes</h2>
-      <p class="section-hint">Ingresa el porcentaje de salud de cada componente (0–100)</p>
-      <div class="sliders-grid">
-        <div class="slider-field">
-          <div class="slider-header">
-            <label>Motor</label>
-            <span class="slider-value" id="val-motor">70%</span>
+        <div class="form-grid">
+          <div class="field">
+            <label for="conductor">Persona que lo maneja</label>
+            <input type="text" id="conductor" placeholder="Ej: Juan Pérez">
           </div>
-          <input type="range" id="motor" min="0" max="100" value="70" oninput="updateSlider('motor')">
-          <div class="slider-bar-track"><div class="slider-bar-fill" id="bar-motor" style="width:70%"></div></div>
+          <div class="field">
+            <label for="kilometraje">Kilometraje actual</label>
+            <input type="number" id="kilometraje" placeholder="Ej: 516667" min="0">
+          </div>
         </div>
-        <div class="slider-field">
-          <div class="slider-header">
-            <label>Frenos</label>
-            <span class="slider-value" id="val-frenos">80%</span>
+
+        <div class="docs-block">
+          <div class="docs-header-row">
+            <span>Registro Vehicular</span>
+            <span>Póliza de Seguro</span>
+            <span>Revisado Vehicular</span>
+            <span>Permiso de Tránsito</span>
           </div>
-          <input type="range" id="frenos" min="0" max="100" value="80" oninput="updateSlider('frenos')">
-          <div class="slider-bar-track"><div class="slider-bar-fill" id="bar-frenos" style="width:80%"></div></div>
-        </div>
-        <div class="slider-field">
-          <div class="slider-header">
-            <label>Neumáticos</label>
-            <span class="slider-value" id="val-neumaticos">60%</span>
+          <div class="docs-input-row">
+            <div class="doc-cell">
+              <select id="doc-registro" class="doc-select">
+                <option value="si" selected>Sí</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            <div class="doc-cell">
+              <select id="doc-poliza" class="doc-select">
+                <option value="si" selected>Sí</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            <div class="doc-cell">
+              <select id="doc-revisado" class="doc-select">
+                <option value="si" selected>Sí</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            <div class="doc-cell">
+              <select id="doc-permiso" class="doc-select">
+                <option value="si">Sí</option>
+                <option value="no" selected>No</option>
+              </select>
+            </div>
           </div>
-          <input type="range" id="neumaticos" min="0" max="100" value="60" oninput="updateSlider('neumaticos')">
-          <div class="slider-bar-track"><div class="slider-bar-fill" id="bar-neumaticos" style="width:60%"></div></div>
-        </div>
-        <div class="slider-field">
-          <div class="slider-header">
-            <label>Combustible</label>
-            <span class="slider-value" id="val-combustible">50%</span>
-          </div>
-          <input type="range" id="combustible" min="0" max="100" value="50" oninput="updateSlider('combustible')">
-          <div class="slider-bar-track"><div class="slider-bar-fill" id="bar-combustible" style="width:50%"></div></div>
         </div>
       </div>
-    </div>
 
-    <div class="form-actions">
-      <a href="index.html" class="btn-cancel">Cancelar</a>
-      <button class="btn-primary" onclick="guardarAuto()">💾 Guardar Auto</button>
-    </div>
+      <div class="form-section">
+        <h2>Estado Operativo</h2>
+        <div class="status-options">
+          <label class="status-option operativo">
+            <input type="radio" name="estado" value="operativo" checked>
+            <span class="status-icon">✅</span>
+            <span class="status-label">Operativo</span>
+          </label>
+          <label class="status-option mantenimiento">
+            <input type="radio" name="estado" value="mantenimiento">
+            <span class="status-icon">🔧</span>
+            <span class="status-label">En mantenimiento</span>
+          </label>
+          <label class="status-option fuera">
+            <input type="radio" name="estado" value="fuera">
+            <span class="status-icon">⚠️</span>
+            <span class="status-label">Fuera de servicio</span>
+          </label>
+        </div>
+      </div>
 
+      <div class="form-actions">
+        <a href="index.html" class="btn-cancel">Cancelar</a>
+        <button class="btn-primary" onclick="guardarAuto()">💾 Guardar Auto</button>
+      </div>
+    </div>
   </div>
-
   <!-- Toast -->
   <div id="toast" class="toast">✅ Auto agregado exitosamente</div>
 
   <script src="agregar-auto.js"></script>
 </body>
+
 </html>
