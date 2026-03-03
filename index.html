@@ -262,25 +262,49 @@
       <div class="brand-logo">🚗</div>
       <span class="brand-name">Flota<span>Pro</span></span>
     </a>
-
+  
+    <!-- Nav — solo desktop -->
     <nav class="header-nav">
       <a href="index.html" class="nav-link active">Dashboard</a>
       <a href="#" class="nav-link">Reportes</a>
       <a href="#" class="nav-link">Historial</a>
     </nav>
-
+  
+    <!-- Acciones — solo desktop -->
     <div class="header-actions">
-      <button class="btn-login" onclick="">
-        <svg width="14" height="14" ...>...</svg>
-        <span class="login-text">Iniciar sesión</span>
+      <button class="btn-login" onclick="document.getElementById('loginModal').classList.add('open')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        Iniciar sesión
       </button>
-      
       <a href="agregar-auto.html" class="btn-add-header">
-        <svg width="13" height="13" ...>...</svg>
-        <span class="add-text">Agregar Auto</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Agregar Auto
       </a>
     </div>
+  
+    <!-- Hamburguesa — solo móvil -->
+    <button class="btn-hamburger" id="hamburgerBtn" onclick="toggleMenu()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
   </header>
+  
+  <!-- MOBILE MENU DRAWER -->
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="nav-link-mobile active">🏠 Dashboard</a>
+    <a href="#" class="nav-link-mobile">📊 Reportes</a>
+    <a href="#" class="nav-link-mobile">🕓 Historial</a>
+    <div class="menu-divider"></div>
+    <button class="btn-login-mobile" onclick="closeMobileMenu(); document.getElementById('loginModal').classList.add('open')">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      Iniciar sesión
+    </button>
+    <a href="agregar-auto.html" class="btn-add-mobile" onclick="closeMobileMenu()">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Agregar Auto
+    </a>
+  </nav>
 
   <!-- ── MODAL LOGIN ── -->
   <div class="modal-overlay" id="loginModal">
@@ -419,10 +443,30 @@
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       el.classList.add('active');
       document.getElementById('graficos-view').style.display = tab === 'graficos' ? '' : 'none';
-      document.getElementById('list-view').style.display = tab === 'lista' ? '' : 'none';
+      document.getElementById('list-view').style.display     = tab === 'lista'    ? '' : 'none';
     }
-
-    // Close modal on overlay click
+  
+    function toggleMenu() {
+      document.getElementById('hamburgerBtn').classList.toggle('open');
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+  
+    function closeMobileMenu() {
+      document.getElementById('hamburgerBtn').classList.remove('open');
+      document.getElementById('mobileMenu').classList.remove('open');
+    }
+  
+    // Cerrar al tocar fuera del menú
+    document.addEventListener('click', function(e) {
+      const btn  = document.getElementById('hamburgerBtn');
+      const menu = document.getElementById('mobileMenu');
+      if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        btn.classList.remove('open');
+        menu.classList.remove('open');
+      }
+    });
+  
+    // Cerrar modal al click en overlay
     document.getElementById('loginModal').addEventListener('click', function(e) {
       if (e.target === this) this.classList.remove('open');
     });

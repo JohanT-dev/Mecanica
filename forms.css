@@ -55,7 +55,7 @@ body {
 
 .btn-back-header {
     background: transparent;
-    border: 1.5px solid var(--border);
+    border: 1.5px solid white;
     color: var(--text-muted);
     font-family: 'Segoe UI', Arial, sans-serif;
     font-size: 0.875rem;
