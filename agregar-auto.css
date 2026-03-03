@@ -396,3 +396,156 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ══════════════════════════════
+   CHECKLIST RESPONSIVE
+   ══════════════════════════════ */
+
+/* Todos los inputs con font-size 16px para evitar zoom automático en iOS */
+.field input,
+.field select,
+.field textarea,
+.docs-table select {
+  font-size: 16px !important;
+}
+
+/* TABLET */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .page-wrap {
+    padding: 28px 20px 50px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .checks-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* MÓVIL */
+@media (max-width: 640px) {
+  .main-header {
+    padding: 0 14px;
+    height: 56px;
+  }
+
+  .page-wrap {
+    padding: 18px 14px 70px;
+  }
+
+  /* Título */
+  .page-title-block h1 {
+    font-size: 1.35rem;
+  }
+
+  .page-title-block p {
+    font-size: 0.85rem;
+  }
+
+  /* Secciones */
+  .form-section {
+    padding: 18px 14px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+  }
+
+  .form-section h2 {
+    font-size: 0.82rem;
+    margin-bottom: 14px;
+  }
+
+  /* Grid: 1 columna */
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .checks-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .check-item {
+    padding: 10px 10px;
+    font-size: 0.82rem;
+    gap: 8px;
+  }
+
+  /* Tabla de docs: compacta */
+  .docs-table th,
+  .docs-table td {
+    padding: 8px 10px;
+    font-size: 0.84rem;
+  }
+
+  /* Tabla checklist (Bueno/Regular/Malo) */
+  .check-table th,
+  .check-table td {
+    padding: 8px 6px;
+    font-size: 0.8rem;
+  }
+
+  /* Etiqueta del componente: más angosta */
+  .check-table th:first-child,
+  .check-table td:first-child {
+    width: 50%;
+  }
+
+  /* Radio buttons más grandes (más fáciles de tocar) */
+  .radio-pill {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Status options: columna */
+  .status-options {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .status-option {
+    min-width: unset;
+    padding: 12px 14px;
+  }
+
+  /* Acciones: columna */
+  .form-actions {
+    flex-direction: column-reverse;
+    gap: 10px;
+    position: sticky;
+    bottom: 0;
+    background: var(--bg);
+    padding: 14px;
+    margin: 0 -14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .btn-submit,
+  .btn-email,
+  .btn-cancel {
+    width: 100%;
+    justify-content: center;
+    min-height: 48px;
+    /* área táctil cómoda */
+    border-radius: 12px;
+  }
+}
+
+/* Móvil muy pequeño */
+@media (max-width: 380px) {
+  .checks-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .check-table th:not(:first-child),
+  .check-table td:not(:first-child) {
+    padding: 6px 2px;
+  }
+
+  .radio-pill {
+    width: 20px;
+    height: 20px;
+  }
+}
