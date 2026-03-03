@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
   <link rel="stylesheet" href="agregar-auto.css">
   <link rel="stylesheet" href="forms.css">
 </head>
+
 <body>
 
   <!-- ── HEADER ── -->
@@ -70,19 +72,31 @@
         <tbody>
           <tr>
             <td>Registro Vehicular</td>
-            <td><select id="doc-registro"><option value="si">Sí</option><option value="no">No</option></select></td>
+            <td><select id="doc-registro">
+                <option value="si">Sí</option>
+                <option value="no">No</option>
+              </select></td>
           </tr>
           <tr>
             <td>Póliza de Seguro</td>
-            <td><select id="doc-poliza"><option value="si">Sí</option><option value="no">No</option></select></td>
+            <td><select id="doc-poliza">
+                <option value="si">Sí</option>
+                <option value="no">No</option>
+              </select></td>
           </tr>
           <tr>
             <td>Revisado Vehicular</td>
-            <td><select id="doc-revisado"><option value="si">Sí</option><option value="no">No</option></select></td>
+            <td><select id="doc-revisado">
+                <option value="si">Sí</option>
+                <option value="no">No</option>
+              </select></td>
           </tr>
           <tr>
             <td>Permiso de Tránsito</td>
-            <td><select id="doc-permiso"><option value="si">Sí</option><option value="no" selected>No</option></select></td>
+            <td><select id="doc-permiso">
+                <option value="si">Sí</option>
+                <option value="no" selected>No</option>
+              </select></td>
           </tr>
         </tbody>
       </table>
@@ -93,11 +107,11 @@
       <h2>🔧 Herramientas / Exteriores</h2>
       <div class="checks-grid">
         <label class="check-item"><input type="checkbox" id="extintor"> Extintor</label>
-        <label class="check-item"><input type="checkbox" id="triangulo" checked> Triángulo y Herramientas</label>
-        <label class="check-item"><input type="checkbox" id="gato-ext" checked> Gato Hidráulico</label>
-        <label class="check-item"><input type="checkbox" id="pintura" checked> Pintura y Carrocería</label>
-        <label class="check-item"><input type="checkbox" id="llave" checked> Llave de Rueda</label>
-        <label class="check-item"><input type="checkbox" id="limpieza" checked> Orden y Limpieza</label>
+        <label class="check-item"><input type="checkbox" id="triangulo" > Triángulo y Herramientas</label>
+        <label class="check-item"><input type="checkbox" id="gato-ext" > Gato Hidráulico</label>
+        <label class="check-item"><input type="checkbox" id="pintura" > Pintura y Carrocería</label>
+        <label class="check-item"><input type="checkbox" id="llave" > Llave de Rueda</label>
+        <label class="check-item"><input type="checkbox" id="limpieza"> Orden y Limpieza</label>
       </div>
     </div>
 
@@ -178,7 +192,8 @@
       <div class="form-grid">
         <div class="field full">
           <label>Observaciones generales</label>
-          <textarea id="observaciones" placeholder="Anota cualquier observación adicional sobre el vehículo..."></textarea>
+          <textarea id="observaciones"
+            placeholder="Anota cualquier observación adicional sobre el vehículo..."></textarea>
         </div>
         <div class="field">
           <label>Revisado por</label>
@@ -195,7 +210,11 @@
     <div class="form-actions">
       <a href="index.html" class="btn-cancel">Cancelar</a>
       <button class="btn-email" onclick="enviarReporte()">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2" />
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+        </svg>
         Enviar por correo
       </button>
       <button class="btn-submit" onclick="guardarChecklist()">
@@ -255,7 +274,7 @@
     const now = new Date();
     const pad = n => String(n).padStart(2, '0');
     document.getElementById('fecha').value =
-      `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+      `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
 
     // ── Toast ──
     function showToast(msg, color = '#22c55e') {
@@ -289,4 +308,5 @@
     }
   </script>
 </body>
+
 </html>
