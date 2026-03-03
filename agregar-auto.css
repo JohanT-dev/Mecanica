@@ -409,143 +409,99 @@
   font-size: 16px !important;
 }
 
-/* TABLET */
-@media (min-width: 641px) and (max-width: 1024px) {
-  .page-wrap {
-    padding: 28px 20px 50px;
-  }
-
-  .form-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .checks-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+/* ── FIX HEADER MÓVIL ── */
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  height: auto;
+  /* ← ya no altura fija */
+  min-height: 56px;
+  flex-wrap: nowrap;
+  gap: 8px;
+  background: rgba(13, 27, 46, 0.97);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  backdrop-filter: blur(14px);
 }
 
-/* MÓVIL */
-@media (max-width: 640px) {
-  .main-header {
-    padding: 0 14px;
-    height: 56px;
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  flex-shrink: 0;
+  /* ← nunca se encoge */
+  min-width: 0;
+}
+
+.brand-name {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.brand-name span {
+  color: #4f8ef7;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 1;
+  /* ← puede encogerse */
+  min-width: 0;
+}
+
+.btn-back-header {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--text-muted);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 7px 12px;
+  border-radius: 50px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-back-header:hover {
+  border-color: #4f8ef7;
+  color: #4f8ef7;
+}
+
+/* En móvil: ocultar texto, dejar solo la flecha */
+@media (max-width: 480px) {
+  .back-text {
+    display: none;
   }
 
-  .page-wrap {
-    padding: 18px 14px 70px;
+  .btn-back-header {
+    padding: 8px 11px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    justify-content: center;
   }
 
-  /* Título */
-  .page-title-block h1 {
-    font-size: 1.35rem;
-  }
-
-  .page-title-block p {
+  .brand-logo {
+    width: 30px;
+    height: 30px;
     font-size: 0.85rem;
   }
 
-  /* Secciones */
-  .form-section {
-    padding: 18px 14px;
-    border-radius: 14px;
-    margin-bottom: 14px;
-  }
-
-  .form-section h2 {
-    font-size: 0.82rem;
-    margin-bottom: 14px;
-  }
-
-  /* Grid: 1 columna */
-  .form-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .checks-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  .check-item {
-    padding: 10px 10px;
-    font-size: 0.82rem;
-    gap: 8px;
-  }
-
-  /* Tabla de docs: compacta */
-  .docs-table th,
-  .docs-table td {
-    padding: 8px 10px;
-    font-size: 0.84rem;
-  }
-
-  /* Tabla checklist (Bueno/Regular/Malo) */
-  .check-table th,
-  .check-table td {
-    padding: 8px 6px;
-    font-size: 0.8rem;
-  }
-
-  /* Etiqueta del componente: más angosta */
-  .check-table th:first-child,
-  .check-table td:first-child {
-    width: 50%;
-  }
-
-  /* Radio buttons más grandes (más fáciles de tocar) */
-  .radio-pill {
-    width: 22px;
-    height: 22px;
-  }
-
-  /* Status options: columna */
-  .status-options {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .status-option {
-    min-width: unset;
-    padding: 12px 14px;
-  }
-
-  /* Acciones: columna */
-  .form-actions {
-    flex-direction: column-reverse;
-    gap: 10px;
-    position: sticky;
-    bottom: 0;
-    background: var(--bg);
-    padding: 14px;
-    margin: 0 -14px;
-    border-top: 1px solid var(--border);
-  }
-
-  .btn-submit,
-  .btn-email,
-  .btn-cancel {
-    width: 100%;
-    justify-content: center;
-    min-height: 48px;
-    /* área táctil cómoda */
-    border-radius: 12px;
-  }
-}
-
-/* Móvil muy pequeño */
-@media (max-width: 380px) {
-  .checks-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .check-table th:not(:first-child),
-  .check-table td:not(:first-child) {
-    padding: 6px 2px;
-  }
-
-  .radio-pill {
-    width: 20px;
-    height: 20px;
+  .brand-name {
+    font-size: 0.95rem;
   }
 }
