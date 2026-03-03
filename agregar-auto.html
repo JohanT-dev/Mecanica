@@ -1,135 +1,673 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agregar Auto - Flota de Autos</title>
+  <title>Check List Vehículo - Flota de Autos</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="agregar-auto.css">
-</head>
+  <style>
+    body { padding: 0; }
 
+    /* ── HEADER ── */
+    .main-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 64px;
+      background: rgba(13, 27, 46, 0.95);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .brand-logo {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, #4f8ef7, #3a6fd8);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 10px rgba(79,142,247,0.35);
+    }
+
+    .brand-name {
+      font-size: 1.15rem; font-weight: 800;
+      color: var(--text); letter-spacing: -0.3px;
+    }
+
+    .brand-name span { color: #4f8ef7; }
+
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+
+    .btn-back-header {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--text-muted);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 0.875rem; font-weight: 600;
+      padding: 8px 16px; border-radius: 50px;
+      cursor: pointer; text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+
+    .btn-back-header:hover { border-color: #4f8ef7; color: #4f8ef7; }
+
+    /* ── PAGE ── */
+    .page-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 36px 24px 60px;
+    }
+
+    .page-title-block {
+      margin-bottom: 32px;
+    }
+
+    .page-title-block h1 {
+      font-size: 1.8rem; font-weight: 800;
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .page-title-block p {
+      color: var(--text-muted); font-size: 0.92rem; margin-top: 6px;
+    }
+
+    /* ── FORM SECTIONS ── */
+    .form-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+
+    .form-section h2 {
+      font-size: 1rem; font-weight: 700;
+      color: #4f8ef7;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+
+    .field label {
+      font-size: 0.8rem; font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      background: var(--bg-card2);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 0.92rem;
+      padding: 10px 14px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus { border-color: #4f8ef7; }
+
+    .field select option { background: var(--bg-card2); }
+
+    .field textarea { resize: vertical; min-height: 80px; }
+
+    /* ── DOCS TABLE ── */
+    .docs-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 4px;
+    }
+
+    .docs-table th {
+      background: var(--bg-card2);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .docs-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    .docs-table tr:last-child td { border-bottom: none; }
+
+    .docs-table select {
+      background: var(--bg-card2);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 0.88rem;
+      padding: 6px 10px;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .docs-table select:focus { border-color: #4f8ef7; }
+
+    /* ── CHECK TABLE (Bueno/Regular/Malo) ── */
+    .check-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .check-table th {
+      background: var(--bg-card2);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .check-table th:first-child { text-align: left; width: 55%; }
+    .check-table th:not(:first-child) { text-align: center; }
+
+    .check-table td {
+      padding: 9px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+
+    .check-table td:not(:first-child) { text-align: center; }
+
+    .check-table tr:last-child td { border-bottom: none; }
+
+    .check-table tr:hover td { background: rgba(79,142,247,0.04); }
+
+    /* Radio pills */
+    .radio-pill {
+      appearance: none;
+      width: 20px; height: 20px;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      cursor: pointer;
+      position: relative;
+      transition: border-color 0.15s, background 0.15s;
+      vertical-align: middle;
+    }
+
+    .radio-bueno:checked  { border-color: #22c55e; background: #22c55e; }
+    .radio-regular:checked { border-color: #f59e0b; background: #f59e0b; }
+    .radio-malo:checked   { border-color: #ef4444; background: #ef4444; }
+
+    .radio-bueno:hover   { border-color: #22c55e; }
+    .radio-regular:hover { border-color: #f59e0b; }
+    .radio-malo:hover    { border-color: #ef4444; }
+
+    /* ── CHECKBOXES ── */
+    .checks-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg-card2);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      font-size: 0.88rem;
+    }
+
+    .check-item:hover { border-color: #4f8ef7; }
+
+    .check-item input[type="checkbox"] {
+      appearance: none;
+      width: 18px; height: 18px;
+      border: 2px solid var(--border);
+      border-radius: 5px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .check-item input[type="checkbox"]:checked {
+      background: #4f8ef7;
+      border-color: #4f8ef7;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+      background-size: 12px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    /* ── STATUS OPTIONS ── */
+    .status-options {
+      display: flex; gap: 12px; flex-wrap: wrap;
+    }
+
+    .status-option {
+      flex: 1; min-width: 130px;
+      display: flex; align-items: center; gap: 10px;
+      background: var(--bg-card2);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .status-option input[type="radio"] { display: none; }
+
+    .status-option.operativo:has(input:checked) {
+      border-color: #22c55e;
+      background: rgba(34,197,94,0.08);
+    }
+
+    .status-option.mantenimiento:has(input:checked) {
+      border-color: #f59e0b;
+      background: rgba(245,158,11,0.08);
+    }
+
+    .status-option.fuera:has(input:checked) {
+      border-color: #ef4444;
+      background: rgba(239,68,68,0.08);
+    }
+
+    .status-label { font-weight: 600; font-size: 0.9rem; }
+
+    /* ── ACTIONS ── */
+    .form-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 8px;
+    }
+
+    .btn-cancel {
+      background: var(--bg-card2);
+      border: 1.5px solid var(--border);
+      color: var(--text-muted);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 0.9rem; font-weight: 600;
+      padding: 12px 24px; border-radius: 50px;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-cancel:hover { background: var(--bg); }
+
+    .btn-submit {
+      background: linear-gradient(to bottom, #1b1c3f, #4a4e91);
+      color: white;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 0.9rem; font-weight: 700;
+      padding: 12px 28px; border-radius: 50px;
+      border: none; cursor: pointer;
+      box-shadow: 0 4px 14px rgba(79,142,247,0.25);
+      transition: all 0.25s;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .btn-submit:hover {
+      background: linear-gradient(to bottom, #2c2f63, #5b67b7);
+      transform: translateY(-1px);
+    }
+
+    .btn-email {
+      background: transparent;
+      border: 1.5px solid #4f8ef7;
+      color: #4f8ef7;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 0.9rem; font-weight: 600;
+      padding: 12px 24px; border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .btn-email:hover { background: rgba(79,142,247,0.1); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      background: #22c55e;
+      color: #fff;
+      font-weight: 700; font-size: 0.9rem;
+      padding: 12px 22px;
+      border-radius: 50px;
+      box-shadow: 0 4px 20px rgba(34,197,94,0.35);
+      opacity: 0; transform: translateY(10px);
+      transition: opacity 0.3s, transform 0.3s;
+      z-index: 999; pointer-events: none;
+    }
+
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .main-header { padding: 0 16px; }
+      .page-wrap { padding: 20px 16px 50px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .checks-grid { grid-template-columns: 1fr 1fr; }
+      .form-actions { flex-direction: column; }
+      .btn-submit, .btn-cancel, .btn-email { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
 <body>
 
-  <div class="page-header">
-    <a href="index.html" class="btn-back">← Volver</a>
-    <h1><span class="icon">🚗</span> Agregar Auto</h1>
-    <p>Completa los datos del nuevo vehículo</p>
-  </div>
+  <!-- ── HEADER ── -->
+  <header class="main-header">
+    <a href="index.html" class="header-brand">
+      <div class="brand-logo">🚗</div>
+      <span class="brand-name">Flota<span>Pro</span></span>
+    </a>
+    <div class="header-actions">
+      <a href="index.html" class="btn-back-header">
+        ← Volver al dashboard
+      </a>
+    </div>
+  </header>
 
-    <div class="form-container">
+  <div class="page-wrap">
+    <div class="page-title-block">
+      <h1>📋 Check List Vehículo</h1>
+      <p>Registro de inspección — completa todas las secciones del vehículo</p>
+    </div>
 
-      <div class="form-section">
-        <h2>Información General</h2>
-        <div class="form-grid">
-          <div class="field">
-            <label for="nombre">Nombre del Auto</label>
-            <input type="text" id="nombre" placeholder="Ej: Auto 05">
-          </div>
-          <div class="field">
-            <label for="placa">Placa</label>
-            <input type="text" id="placa" placeholder="Ej: JKL-7890">
-          </div>
-          <div class="field">
-            <label for="marca">Marca</label>
-            <input type="text" id="marca" placeholder="Ej: Toyota">
-          </div>
-          <div class="field">
-            <label for="modelo">Modelo</label>
-            <input type="text" id="modelo" placeholder="Ej: Corolla">
-          </div>
-          <div class="field">
-            <label for="anio">Año</label>
-            <input type="number" id="anio" placeholder="Ej: 2022" min="1990" max="2030">
-          </div>
-          <div class="field">
-            <label for="color">Color</label>
-            <input type="text" id="color" placeholder="Ej: Blanco">
-          </div>
+    <!-- 1. INFORMACIÓN GENERAL -->
+    <div class="form-section">
+      <h2>📄 Información General</h2>
+      <div class="form-grid">
+        <div class="field">
+          <label>Fecha</label>
+          <input type="datetime-local" id="fecha">
         </div>
-      </div>
-
-      <div class="form-section">
-        <h2>Uso y Documentación</h2>
-
-        <div class="form-grid">
-          <div class="field">
-            <label for="conductor">Persona que lo maneja</label>
-            <input type="text" id="conductor" placeholder="Ej: Juan Pérez">
-          </div>
-          <div class="field">
-            <label for="kilometraje">Kilometraje actual</label>
-            <input type="number" id="kilometraje" placeholder="Ej: 516667" min="0">
-          </div>
+        <div class="field">
+          <label>Técnico</label>
+          <input type="text" id="tecnico" placeholder="Ej: Keimer Martinez">
         </div>
-
-        <div class="docs-block">
-          <div class="docs-header-row">
-            <span>Registro Vehicular</span>
-            <span>Póliza de Seguro</span>
-            <span>Revisado Vehicular</span>
-            <span>Permiso de Tránsito</span>
-          </div>
-          <div class="docs-input-row">
-            <div class="doc-cell">
-              <select id="doc-registro" class="doc-select">
-                <option value="si" selected>Sí</option>
-                <option value="no">No</option>
-              </select>
-            </div>
-            <div class="doc-cell">
-              <select id="doc-poliza" class="doc-select">
-                <option value="si" selected>Sí</option>
-                <option value="no">No</option>
-              </select>
-            </div>
-            <div class="doc-cell">
-              <select id="doc-revisado" class="doc-select">
-                <option value="si" selected>Sí</option>
-                <option value="no">No</option>
-              </select>
-            </div>
-            <div class="doc-cell">
-              <select id="doc-permiso" class="doc-select">
-                <option value="si">Sí</option>
-                <option value="no" selected>No</option>
-              </select>
-            </div>
-          </div>
+        <div class="field">
+          <label>Vehículo</label>
+          <input type="text" id="vehiculo" placeholder="Ej: Panel, Camión, Sedán">
         </div>
-      </div>
-
-      <div class="form-section">
-        <h2>Estado Operativo</h2>
-        <div class="status-options">
-          <label class="status-option operativo">
-            <input type="radio" name="estado" value="operativo" checked>
-            <span class="status-icon">✅</span>
-            <span class="status-label">Operativo</span>
-          </label>
-          <label class="status-option mantenimiento">
-            <input type="radio" name="estado" value="mantenimiento">
-            <span class="status-icon">🔧</span>
-            <span class="status-label">En mantenimiento</span>
-          </label>
-          <label class="status-option fuera">
-            <input type="radio" name="estado" value="fuera">
-            <span class="status-icon">⚠️</span>
-            <span class="status-label">Fuera de servicio</span>
-          </label>
+        <div class="field">
+          <label>Placa</label>
+          <input type="text" id="placa" placeholder="Ej: 00AN9574">
         </div>
-      </div>
-
-      <div class="form-actions">
-        <a href="index.html" class="btn-cancel">Cancelar</a>
-        <button class="btn-primary" onclick="guardarAuto()">💾 Guardar Auto</button>
+        <div class="field">
+          <label>Kilometraje</label>
+          <input type="number" id="kilometraje" placeholder="Ej: 516667" min="0">
+        </div>
       </div>
     </div>
+
+    <!-- 2. DOCUMENTACIÓN -->
+    <div class="form-section">
+      <h2>📁 Documentación</h2>
+      <table class="docs-table">
+        <thead>
+          <tr>
+            <th>Documento</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Registro Vehicular</td>
+            <td><select id="doc-registro"><option value="si">Sí</option><option value="no">No</option></select></td>
+          </tr>
+          <tr>
+            <td>Póliza de Seguro</td>
+            <td><select id="doc-poliza"><option value="si">Sí</option><option value="no">No</option></select></td>
+          </tr>
+          <tr>
+            <td>Revisado Vehicular</td>
+            <td><select id="doc-revisado"><option value="si">Sí</option><option value="no">No</option></select></td>
+          </tr>
+          <tr>
+            <td>Permiso de Tránsito</td>
+            <td><select id="doc-permiso"><option value="si">Sí</option><option value="no" selected>No</option></select></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3. HERRAMIENTAS / EXTERIORES -->
+    <div class="form-section">
+      <h2>🔧 Herramientas / Exteriores</h2>
+      <div class="checks-grid">
+        <label class="check-item"><input type="checkbox" id="extintor"> Extintor</label>
+        <label class="check-item"><input type="checkbox" id="triangulo" checked> Triángulo y Herramientas</label>
+        <label class="check-item"><input type="checkbox" id="gato-ext" checked> Gato Hidráulico</label>
+        <label class="check-item"><input type="checkbox" id="pintura" checked> Pintura y Carrocería</label>
+        <label class="check-item"><input type="checkbox" id="llave" checked> Llave de Rueda</label>
+        <label class="check-item"><input type="checkbox" id="limpieza" checked> Orden y Limpieza</label>
+      </div>
+    </div>
+
+    <!-- 4. SISTEMA ELÉCTRICO -->
+    <div class="form-section">
+      <h2>⚡ Sistema Eléctrico</h2>
+      <table class="check-table">
+        <thead>
+          <tr>
+            <th>Componente</th>
+            <th style="color:#22c55e">Bueno</th>
+            <th style="color:#f59e0b">Regular</th>
+            <th style="color:#ef4444">Malo</th>
+          </tr>
+        </thead>
+        <tbody id="electrico-tbody">
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 5. ACCESORIOS INDISPENSABLES -->
+    <div class="form-section">
+      <h2>🧰 Accesorios Indispensables</h2>
+      <table class="check-table">
+        <thead>
+          <tr>
+            <th>Accesorio</th>
+            <th style="color:#22c55e">Bueno</th>
+            <th style="color:#f59e0b">Regular</th>
+            <th style="color:#ef4444">Malo</th>
+          </tr>
+        </thead>
+        <tbody id="accesorios-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- 6. ESTRUCTURA EXTERNA -->
+    <div class="form-section">
+      <h2>🚗 Estructura Externa</h2>
+      <table class="check-table">
+        <thead>
+          <tr>
+            <th>Elemento</th>
+            <th style="color:#22c55e">Bueno</th>
+            <th style="color:#f59e0b">Regular</th>
+            <th style="color:#ef4444">Malo</th>
+          </tr>
+        </thead>
+        <tbody id="externa-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- 7. ESTADO OPERATIVO -->
+    <div class="form-section">
+      <h2>🚦 Estado Operativo del Vehículo</h2>
+      <div class="status-options">
+        <label class="status-option operativo">
+          <input type="radio" name="estado" value="operativo" checked>
+          <span>✅</span>
+          <span class="status-label">Operativo</span>
+        </label>
+        <label class="status-option mantenimiento">
+          <input type="radio" name="estado" value="mantenimiento">
+          <span>🔧</span>
+          <span class="status-label">En mantenimiento</span>
+        </label>
+        <label class="status-option fuera">
+          <input type="radio" name="estado" value="fuera">
+          <span>⚠️</span>
+          <span class="status-label">Fuera de servicio</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- 8. OBSERVACIONES -->
+    <div class="form-section">
+      <h2>📝 Observaciones</h2>
+      <div class="form-grid">
+        <div class="field full">
+          <label>Observaciones generales</label>
+          <textarea id="observaciones" placeholder="Anota cualquier observación adicional sobre el vehículo..."></textarea>
+        </div>
+        <div class="field">
+          <label>Revisado por</label>
+          <input type="text" id="revisado-por" placeholder="Nombre del supervisor">
+        </div>
+        <div class="field">
+          <label>Correo para envío del reporte</label>
+          <input type="email" id="email-reporte" placeholder="supervisor@empresa.com">
+        </div>
+      </div>
+    </div>
+
+    <!-- ACCIONES -->
+    <div class="form-actions">
+      <a href="index.html" class="btn-cancel">Cancelar</a>
+      <button class="btn-email" onclick="enviarReporte()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Enviar por correo
+      </button>
+      <button class="btn-submit" onclick="guardarChecklist()">
+        💾 Guardar Check List
+      </button>
+    </div>
   </div>
-  <!-- Toast -->
-  <div id="toast" class="toast">✅ Auto agregado exitosamente</div>
 
-  <script src="agregar-auto.js"></script>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ── Datos de las tablas según el PDF ──
+    const electricoItems = [
+      'Aceite de Freno', 'Aceite de Motor', 'Agua / Coolant',
+      'Agua de reserva del Limpia Parabrisas', 'Aceite de Powerstering',
+      'Escobillas', 'Batería',
+      'Encendido de Luz Delantera Derecha', 'Encendido de Luz Delantera Izquierda',
+      'Encendido de Direccional Derecha Delantera', 'Encendido de Direccional Izquierda Delantera',
+      'Encendido de Luz Trasera Derecha', 'Encendido de Luz Trasera Izquierda',
+      'Encendido de Direccional Trasera Derecha', 'Encendido de Direccional Trasera Izquierda',
+      'Luces Intermitentes', 'Luces Altas', 'Luces Bajas',
+      'Indicadores de Tablero', 'Temperatura', 'Combustible', 'Frenos'
+    ];
+
+    const accesoriosItems = [
+      'Llanta de Repuesto', 'Triángulo', 'Inversora', 'Pipeta',
+      'Gato Hidráulico', 'Extintor', 'Alarma'
+    ];
+
+    const externaItems = [
+      'Puerta Lateral Derecha', 'Puerta Lateral Izquierda', 'Llantas',
+      'Espejos', 'Parabrisa', 'Vidrio Lateral Derecho', 'Vidrio Lateral Izquierdo',
+      'Vidrio Trasero', 'Puerta trasera o Maletero', 'Tapa de Motor',
+      'Tapicería', 'Estado de Carrocería (Golpes/Rayones)'
+    ];
+
+    function buildTable(items, tbodyId) {
+      const tbody = document.getElementById(tbodyId);
+      items.forEach((item, i) => {
+        const id = tbodyId + '_' + i;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${item}</td>
+          <td><input type="radio" class="radio-pill radio-bueno"   name="${id}" value="bueno"   checked></td>
+          <td><input type="radio" class="radio-pill radio-regular" name="${id}" value="regular"></td>
+          <td><input type="radio" class="radio-pill radio-malo"    name="${id}" value="malo"></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    buildTable(electricoItems, 'electrico-tbody');
+    buildTable(accesoriosItems, 'accesorios-tbody');
+    buildTable(externaItems, 'externa-tbody');
+
+    // Set default datetime
+    const now = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    document.getElementById('fecha').value =
+      `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+
+    // ── Toast ──
+    function showToast(msg, color = '#22c55e') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.background = color;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // ── Guardar ──
+    function guardarChecklist() {
+      const tecnico = document.getElementById('tecnico').value.trim();
+      const vehiculo = document.getElementById('vehiculo').value.trim();
+      if (!tecnico || !vehiculo) {
+        showToast('⚠️ Completa al menos Técnico y Vehículo', '#f59e0b');
+        return;
+      }
+      showToast('✅ Check List guardado exitosamente');
+      setTimeout(() => window.location.href = 'index.html', 1800);
+    }
+
+    // ── Enviar correo ──
+    function enviarReporte() {
+      const email = document.getElementById('email-reporte').value.trim();
+      if (!email) {
+        showToast('📧 Ingresa un correo para enviar el reporte', '#f59e0b');
+        return;
+      }
+      showToast('📧 Reporte enviado a ' + email);
+    }
+  </script>
 </body>
-
 </html>

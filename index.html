@@ -6,132 +6,425 @@
   <title>Flota de Autos</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    /* ── HEADER PROFESIONAL ── */
+    .main-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 64px;
+      background: rgba(13, 27, 46, 0.95);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #4f8ef7, #3a6fd8);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      box-shadow: 0 2px 10px rgba(79,142,247,0.35);
+    }
+
+    .brand-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+
+    .brand-name span {
+      color: #4f8ef7;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--text);
+      background: var(--bg-card2);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-login {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--text);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .btn-login:hover {
+      border-color: #4f8ef7;
+      background: rgba(79,142,247,0.08);
+      color: #4f8ef7;
+    }
+
+    .btn-add-header {
+      background: linear-gradient(to bottom, #1b1c3f, #4a4e91);
+      color: white;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.875rem;
+      border: none;
+      border-radius: 50px;
+      padding: 9px 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(79,142,247,0.25);
+      transition: all 0.25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .btn-add-header:hover {
+      background: linear-gradient(to bottom, #2c2f63, #5b67b7);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(79,142,247,0.35);
+    }
+
+    /* ── LOGIN MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px;
+      width: 100%;
+      max-width: 400px;
+      animation: modalIn 0.2s ease;
+    }
+
+    @keyframes modalIn {
+      from { transform: translateY(12px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+
+    .modal h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .modal p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+
+    .modal-field {
+      margin-bottom: 16px;
+    }
+
+    .modal-field label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .modal-field input {
+      width: 100%;
+      background: var(--bg-card2);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 0.95rem;
+      padding: 10px 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .modal-field input:focus {
+      border-color: #4f8ef7;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .btn-modal-cancel {
+      flex: 1;
+      background: var(--bg-card2);
+      border: 1.5px solid var(--border);
+      color: var(--text-muted);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-modal-cancel:hover { background: var(--bg); }
+
+    .btn-modal-submit {
+      flex: 2;
+      background: linear-gradient(to bottom, #1b1c3f, #4a4e91);
+      color: white;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-modal-submit:hover {
+      background: linear-gradient(to bottom, #2c2f63, #5b67b7);
+    }
+
+    /* ── BODY ADJUST ── */
+    body { padding: 0; }
+    .shell { padding: 32px; }
+
+    @media (max-width: 640px) {
+      .main-header { padding: 0 16px; }
+      .header-nav { display: none; }
+      .brand-name { font-size: 1rem; }
+      .shell { padding: 16px; }
+    }
+  </style>
 </head>
 <body>
 
+  <!-- ── HEADER PROFESIONAL ── -->
+  <header class="main-header">
+    <a href="index.html" class="header-brand">
+      <div class="brand-logo">🚗</div>
+      <span class="brand-name">Flota<span>Pro</span></span>
+    </a>
+
+    <nav class="header-nav">
+      <a href="index.html" class="nav-link active">Dashboard</a>
+      <a href="#" class="nav-link">Reportes</a>
+      <a href="#" class="nav-link">Historial</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="btn-login" onclick="document.getElementById('loginModal').classList.add('open')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        Iniciar sesión
+      </button>
+      <a href="agregar-auto.html" class="btn-add-header">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Agregar Auto
+      </a>
+    </div>
+  </header>
+
+  <!-- ── MODAL LOGIN ── -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal">
+      <h2>🔐 Iniciar sesión</h2>
+      <p>Accede a tu flota de vehículos</p>
+      <div class="modal-field">
+        <label>Correo electrónico</label>
+        <input type="email" placeholder="correo@empresa.com">
+      </div>
+      <div class="modal-field">
+        <label>Contraseña</label>
+        <input type="password" placeholder="••••••••">
+      </div>
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" onclick="document.getElementById('loginModal').classList.remove('open')">Cancelar</button>
+        <button class="btn-modal-submit">Entrar →</button>
+      </div>
+    </div>
+  </div>
+
   <div class="shell">
-    <header class="header">
-      <div class="header-left">
-        <h1><span class="icon">🚗</span> Flota de Autos</h1>
-        <p>Resumen en tiempo real de tu flota</p>
+    <!-- STATS -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-icon" style="color:#22c55e">✅</span>
+        <div><div class="stat-value">2</div><div class="stat-label">Operativos</div></div>
       </div>
-      <div class="header-right">
-        <button class="btn-primary" onclick="agregarAuto()">+ Agregar Auto</button>
+      <div class="stat-card">
+        <span class="stat-icon" style="color:#f59e0b">🔧</span>
+        <div><div class="stat-value">1</div><div class="stat-label">En mantenimiento</div></div>
       </div>
-    </header>
+      <div class="stat-card">
+        <span class="stat-icon" style="color:#ef4444">⚠️</span>
+        <div><div class="stat-value">1</div><div class="stat-label">Fuera de servicio</div></div>
+      </div>
+    </section>
 
-  <main>
-  <section class="stats-grid">
-    <div class="stat-card">
-      <span class="stat-icon" style="color:#22c55e">✅</span>
-      <div><div class="stat-value">2</div><div class="stat-label">Operativos</div></div>
-    </div>
-    <div class="stat-card">
-      <span class="stat-icon" style="color:#f59e0b">🔧</span>
-      <div><div class="stat-value">1</div><div class="stat-label">En mantenimiento</div></div>
-    </div>
-    <div class="stat-card">
-      <span class="stat-icon" style="color:#ef4444">⚠️</span>
-      <div><div class="stat-value">1</div><div class="stat-label">Fuera de servicio</div></div>
-    </div>
-  </section>
+    <section class="tabs">
+      <button class="tab active" onclick="switchTab('graficos', this)">Gráficos</button>
+      <button class="tab" onclick="switchTab('lista', this)">Lista de Autos</button>
+    </section>
 
-  <section class="tabs">
-    <button class="tab active" onclick="switchTab('graficos', this)">Gráficos</button>
-    <button class="tab" onclick="switchTab('lista', this)">Lista de Autos</button>
-  </section>
+    <!-- GRÁFICOS VIEW -->
+    <section id="graficos-view">
+      <div class="charts-row">
+        <div class="card">
+          <h3>Estado General de la Flota</h3>
+          <canvas id="donutChart" height="220"></canvas>
+          <div class="donut-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div> Operativo</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div> Mantenimiento</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div> Fuera de servicio</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Salud Promedio por Componente</h3>
+          <canvas id="barChart" height="220"></canvas>
+        </div>
+      </div>
 
-  <!-- GRÁFICOS VIEW -->
-  <section id="graficos-view">
-    <div class="charts-row">
-      <div class="card">
-        <h3>Estado General de la Flota</h3>
-        <canvas id="donutChart" height="220"></canvas>
-        <div class="donut-legend">
-          <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div> Operativo</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div> Mantenimiento</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div> Fuera de servicio</div>
-        </div>
+      <div class="card fuel-card">
+        <h3>Nivel de Combustible por Auto</h3>
+        <canvas id="fuelChart" height="130"></canvas>
       </div>
-      <div class="card">
-        <h3>Salud Promedio por Componente</h3>
-        <canvas id="barChart" height="220"></canvas>
-      </div>
-    </div>
 
-    <div class="card fuel-card">
-      <h3>Nivel de Combustible por Auto</h3>
-      <canvas id="fuelChart" height="130"></canvas>
-    </div>
+      <div>
+        <div class="individual-title">Estado Individual por Auto</div>
+        <div class="autos-grid">
+          <div class="auto-card">
+            <h4>Auto 01</h4>
+            <p>ABC-1234 · Toyota Corolla</p>
+            <canvas id="radar1" height="180"></canvas>
+          </div>
+          <div class="auto-card">
+            <h4>Auto 02</h4>
+            <p>XYZ-5678 · Chevrolet Spark</p>
+            <canvas id="radar2" height="180"></canvas>
+          </div>
+          <div class="auto-card">
+            <h4>Auto 03</h4>
+            <p>DEF-9012 · Honda Civic</p>
+            <canvas id="radar3" height="180"></canvas>
+          </div>
+          <div class="auto-card" style="grid-column:1;">
+            <h4>Auto 04</h4>
+            <p>GHI-3456 · Ford Ranger</p>
+            <canvas id="radar4" height="180"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <div>
-      <div class="individual-title">Estado Individual por Auto</div>
-      <div class="autos-grid">
-        <div class="auto-card">
-          <h4>Auto 01</h4>
-          <p>ABC-1234 · Toyota Corolla</p>
-          <canvas id="radar1" height="180"></canvas>
+    <!-- LISTA VIEW -->
+    <section id="list-view" style="display:none">
+      <div class="autos-list">
+        <div class="auto-row">
+          <div class="auto-row-info"><h4>Auto 01 - Toyota Corolla</h4><p>ABC-1234</p></div>
+          <span class="status-badge badge-operativo">Operativo</span>
+          <div class="fuel-bar-wrap">
+            <div class="fuel-bar-bg"><div class="fuel-bar-fill" style="width:75%;background:#22c55e"></div></div>
+            <span class="fuel-text">75%</span>
+          </div>
         </div>
-        <div class="auto-card">
-          <h4>Auto 02</h4>
-          <p>XYZ-5678 · Chevrolet Spark</p>
-          <canvas id="radar2" height="180"></canvas>
+        <div class="auto-row">
+          <div class="auto-row-info"><h4>Auto 02 - Chevrolet Spark</h4><p>XYZ-5678</p></div>
+          <span class="status-badge badge-mantenimiento">En mantenimiento</span>
+          <div class="fuel-bar-wrap">
+            <div class="fuel-bar-bg"><div class="fuel-bar-fill" style="width:30%;background:#f59e0b"></div></div>
+            <span class="fuel-text">30%</span>
+          </div>
         </div>
-        <div class="auto-card">
-          <h4>Auto 03</h4>
-          <p>DEF-9012 · Honda Civic</p>
-          <canvas id="radar3" height="180"></canvas>
+        <div class="auto-row">
+          <div class="auto-row-info"><h4>Auto 03 - Honda Civic</h4><p>DEF-9012</p></div>
+          <span class="status-badge badge-operativo">Operativo</span>
+          <div class="fuel-bar-wrap">
+            <div class="fuel-bar-bg"><div class="fuel-bar-fill" style="width:90%;background:#22c55e"></div></div>
+            <span class="fuel-text">90%</span>
+          </div>
         </div>
-        <div class="auto-card" style="grid-column:1;">
-          <h4>Auto 04</h4>
-          <p>GHI-3456 · Ford Ranger</p>
-          <canvas id="radar4" height="180"></canvas>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- LISTA VIEW -->
-  <section id="list-view">
-    <div class="autos-list">
-      <div class="auto-row">
-        <div class="auto-row-info"><h4>Auto 01 - Toyota Corolla</h4><p>ABC-1234</p></div>
-        <span class="status-badge badge-operativo">Operativo</span>
-        <div class="fuel-bar-wrap">
-          <div class="fuel-bar-bg"><div class="fuel-bar-fill" style="width:75%;background:#22c55e"></div></div>
-          <span class="fuel-text">75%</span>
+        <div class="auto-row">
+          <div class="auto-row-info"><h4>Auto 04 - Ford Ranger</h4><p>GHI-3456</p></div>
+          <span class="status-badge badge-fuera">Fuera de servicio</span>
+          <div class="fuel-bar-wrap">
+            <div class="fuel-bar-bg"><div class="fuel-bar-fill" style="width:10%;background:#ef4444"></div></div>
+            <span class="fuel-text">10%</span>
+          </div>
         </div>
       </div>
-      <div class="auto-row">
-        <div class="auto-row-info"><h4>Auto 02 - Chevrolet Spark</h4><p>XYZ-5678</p></div>
-        <span class="status-badge badge-mantenimiento">En mantenimiento</span>
-        <div class="fuel-bar-wrap">
-          <div class="fuel-bar-bg"><div class="fuel-bar-fill" style="width:30%;background:#f59e0b"></div></div>
-          <span class="fuel-text">30%</span>
-        </div>
-      </div>
-      <div class="auto-row">
-        <div class="auto-row-info"><h4>Auto 03 - Honda Civic</h4><p>DEF-9012</p></div>
-        <span class="status-badge badge-operativo">Operativo</span>
-        <div class="fuel-bar-wrap">
-          <div class="fuel-bar-bg"><div class="fuel-bar-fill" style="width:90%;background:#22c55e"></div></div>
-          <span class="fuel-text">90%</span>
-        </div>
-      </div>
-      <div class="auto-row">
-        <div class="auto-row-info"><h4>Auto 04 - Ford Ranger</h4><p>GHI-3456</p></div>
-        <span class="status-badge badge-fuera">Fuera de servicio</span>
-        <div class="fuel-bar-wrap">
-          <div class="fuel-bar-bg"><div class="fuel-bar-fill" style="width:10%;background:#ef4444"></div></div>
-          <span class="fuel-text">10%</span>
-        </div>
-      </div>
-    </div>
-  </section>
-  </main>
-
+    </section>
   </div>
 
   <script src="app.js"></script>
+  <script>
+    function switchTab(tab, el) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('graficos-view').style.display = tab === 'graficos' ? '' : 'none';
+      document.getElementById('list-view').style.display = tab === 'lista' ? '' : 'none';
+    }
+
+    // Close modal on overlay click
+    document.getElementById('loginModal').addEventListener('click', function(e) {
+      if (e.target === this) this.classList.remove('open');
+    });
+  </script>
 </body>
 </html>
