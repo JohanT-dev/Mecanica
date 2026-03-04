@@ -706,6 +706,7 @@ body {
 }
 
 /* TABLET: 641px-1024px */
+/* TABLET: 641px-1024px */
 @media (min-width: 641px) and (max-width: 1024px) {
   .shell {
     padding: 20px;
@@ -715,6 +716,16 @@ body {
     display: none !important;
   }
 
+  .header-actions {
+    display: none !important;
+  }
+
+  /* ← oculta botones desktop */
+  .btn-hamburger {
+    display: flex !important;
+  }
+
+  /* ← muestra hamburguesa */
   .stats-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -857,6 +868,7 @@ body {
     font-size: 1.5rem;
   }
 }
+
 /* ── HEADER PROFESIONAL ── */
 .main-header {
   display: flex;
@@ -890,7 +902,7 @@ body {
   justify-content: center;
   font-size: 1.1rem;
   flex-shrink: 0;
-  box-shadow: 0 2px 10px rgba(79,142,247,0.35);
+  box-shadow: 0 2px 10px rgba(79, 142, 247, 0.35);
 }
 
 .brand-name {
@@ -950,7 +962,7 @@ body {
 
 .btn-login:hover {
   border-color: #4f8ef7;
-  background: rgba(79,142,247,0.08);
+  background: rgba(79, 142, 247, 0.08);
   color: #4f8ef7;
 }
 
@@ -964,7 +976,7 @@ body {
   border-radius: 50px;
   padding: 9px 20px;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(79,142,247,0.25);
+  box-shadow: 0 4px 14px rgba(79, 142, 247, 0.25);
   transition: all 0.25s ease;
   text-decoration: none;
   display: inline-flex;
@@ -975,7 +987,7 @@ body {
 .btn-add-header:hover {
   background: linear-gradient(to bottom, #2c2f63, #5b67b7);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(79,142,247,0.35);
+  box-shadow: 0 6px 20px rgba(79, 142, 247, 0.35);
 }
 
 /* ── LOGIN MODAL ── */
@@ -983,7 +995,7 @@ body {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
   z-index: 200;
   align-items: center;
@@ -1005,8 +1017,15 @@ body {
 }
 
 @keyframes modalIn {
-  from { transform: translateY(12px); opacity: 0; }
-  to   { transform: translateY(0);    opacity: 1; }
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .modal h2 {
@@ -1072,7 +1091,9 @@ body {
   transition: background 0.2s;
 }
 
-.btn-modal-cancel:hover { background: var(--bg); }
+.btn-modal-cancel:hover {
+  background: var(--bg);
+}
 
 .btn-modal-submit {
   flex: 2;
@@ -1093,12 +1114,28 @@ body {
 }
 
 /* ── BODY ADJUST ── */
-body { padding: 0; }
-.shell { padding: 32px; }
+body {
+  padding: 0;
+}
+
+.shell {
+  padding: 32px;
+}
 
 @media (max-width: 640px) {
-  .main-header { padding: 0 16px; }
-  .header-nav { display: none; }
-  .brand-name { font-size: 1rem; }
-  .shell { padding: 16px; }
+  .main-header {
+    padding: 0 16px;
+  }
+
+  .header-nav {
+    display: none;
+  }
+
+  .brand-name {
+    font-size: 1rem;
+  }
+
+  .shell {
+    padding: 16px;
+  }
 }
