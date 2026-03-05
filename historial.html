@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial — FlotaPro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Historial.css">
+  
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="main-header">
+        <a href="index.html" class="header-brand">
+            <div class="brand-logo">🚗</div>
+            <span class="brand-name">Flota<span>Pro</span></span>
+        </a>
+        <nav class="header-nav">
+            <a href="index.html" class="nav-link">Dashboard</a>
+            <a href="reportes.html" class="nav-link">Reportes</a>
+            <a href="historial.html" class="nav-link active">Historial</a>
+        </nav>
+        <div class="header-actions">
+            <button class="btn-login" onclick="document.getElementById('loginModal').classList.add('open')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round">
+                    <circle cx="12" cy="8" r="4" />
+                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                </svg>
+                Iniciar sesión
+            </button>
+            <a href="agregar-auto.html" class="btn-add-header">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"
+                    stroke-linecap="round">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Agregar Auto
+            </a>
+        </div>
+        <button class="btn-hamburger" id="hamburgerBtn" onclick="toggleMenu()">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
+    </header>
+
+    <!-- MOBILE DRAWER -->
+    <nav class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="nav-link-mobile">🏠 Dashboard</a>
+        <a href="reportes.html" class="nav-link-mobile">📊 Reportes</a>
+        <a href="historial.html" class="nav-link-mobile active">🕓 Historial</a>
+        <div class="menu-divider"></div>
+        <button class="btn-login-mobile"
+            onclick="closeMobileMenu(); document.getElementById('loginModal').classList.add('open')">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+            </svg>
+            Iniciar sesión
+        </button>
+        <a href="agregar-auto.html" class="btn-add-mobile" onclick="closeMobileMenu()">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"
+                stroke-linecap="round">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Agregar Auto
+        </a>
+    </nav>
+
+    <!-- MODAL LOGIN -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <h2>🔐 Iniciar sesión</h2>
+            <p>Accede a tu flota de vehículos</p>
+            <div class="modal-field"><label>Correo electrónico</label><input type="email"
+                    placeholder="correo@empresa.com"></div>
+            <div class="modal-field"><label>Contraseña</label><input type="password" placeholder="••••••••"></div>
+            <div class="modal-actions">
+                <button class="btn-modal-cancel"
+                    onclick="document.getElementById('loginModal').classList.remove('open')">Cancelar</button>
+                <button class="btn-modal-submit">Entrar →</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="shell">
+        <div class="page-title-block">
+            <h1>🕓 Historial de Revisiones</h1>
+            <p>Registro completo de inspecciones y mantenimientos por vehículo</p>
+        </div>
+
+        <!-- RESUMEN -->
+        <div class="summary-row">
+            <div class="summary-card">
+                <div class="s-value">38</div>
+                <div class="s-label">Revisiones totales</div>
+            </div>
+            <div class="summary-card">
+                <div class="s-value" style="color:#4ade80">29</div>
+                <div class="s-label">En buen estado</div>
+            </div>
+            <div class="summary-card">
+                <div class="s-value" style="color:#fbbf24">6</div>
+                <div class="s-label">Con observaciones</div>
+            </div>
+            <div class="summary-card">
+                <div class="s-value" style="color:#f87171">3</div>
+                <div class="s-label">Requirieron reparación</div>
+            </div>
+        </div>
+
+        <!-- FILTROS -->
+        <div class="filters-bar">
+            <select class="filter-select">
+                <option value="">Todos los vehículos</option>
+                <option>Auto 01 — Toyota Corolla</option>
+                <option>Auto 02 — Chevrolet Spark</option>
+                <option>Auto 03 — Honda Civic</option>
+                <option>Auto 04 — Ford Ranger</option>
+            </select>
+            <select class="filter-select">
+                <option value="">Todos los estados</option>
+                <option>Operativo</option>
+                <option>En mantenimiento</option>
+                <option>Fuera de servicio</option>
+            </select>
+            <select class="filter-select">
+                <option value="">Último mes</option>
+                <option>Últimos 3 meses</option>
+                <option>Últimos 6 meses</option>
+                <option>Este año</option>
+            </select>
+            <input type="text" class="filter-search" placeholder="🔍  Buscar técnico o vehículo...">
+        </div>
+
+        <!-- TIMELINE -->
+        <div class="timeline">
+
+            <div class="timeline-month">Marzo 2026</div>
+
+            <div class="timeline-item">
+                <div class="timeline-icon icon-ok">✅</div>
+                <div class="timeline-body">
+                    <h4>Revisión general — Toyota Corolla</h4>
+                    <p>Técnico: Keimer Martínez · Placa: ABC-1234 · Km: 87,450 · Todos los sistemas en buen estado</p>
+                </div>
+                <div class="timeline-meta">
+                    <div class="date">04 mar 2026</div>
+                    <span class="badge badge-green">Operativo</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-icon icon-warn">🔧</div>
+                <div class="timeline-body">
+                    <h4>Mantenimiento preventivo — Ford Ranger</h4>
+                    <p>Técnico: Luis Herrera · Placa: GHI-3456 · Km: 516,667 · Cambio de aceite y filtros</p>
+                </div>
+                <div class="timeline-meta">
+                    <div class="date">02 mar 2026</div>
+                    <span class="badge badge-yellow">En mantenimiento</span>
+                </div>
+            </div>
+
+            <div class="timeline-month">Febrero 2026</div>
+
+            <div class="timeline-item">
+                <div class="timeline-icon icon-bad">⚠️</div>
+                <div class="timeline-body">
+                    <h4>Revisión — Chevrolet Spark</h4>
+                    <p>Técnico: Ana Rodríguez · Placa: XYZ-5678 · Km: 43,210 · Llanta de repuesto en mal estado,
+                        extintor vencido</p>
+                </div>
+                <div class="timeline-meta">
+                    <div class="date">28 feb 2026</div>
+                    <span class="badge badge-red">Fuera de servicio</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-icon icon-ok">✅</div>
+                <div class="timeline-body">
+                    <h4>Revisión general — Honda Civic</h4>
+                    <p>Técnico: Keimer Martínez · Placa: DEF-9012 · Km: 62,100 · Excelente condición general</p>
+                </div>
+                <div class="timeline-meta">
+                    <div class="date">21 feb 2026</div>
+                    <span class="badge badge-green">Operativo</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-icon icon-rep">📋</div>
+                <div class="timeline-body">
+                    <h4>Check List completo — Toyota Corolla</h4>
+                    <p>Técnico: Luis Herrera · Placa: ABC-1234 · Km: 86,980 · Tapicería en estado regular</p>
+                </div>
+                <div class="timeline-meta">
+                    <div class="date">14 feb 2026</div>
+                    <span class="badge badge-yellow">Observación</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-icon icon-warn">🔧</div>
+                <div class="timeline-body">
+                    <h4>Reparación de frenos — Ford Ranger</h4>
+                    <p>Técnico: Ana Rodríguez · Placa: GHI-3456 · Km: 515,200 · Reemplazo de pastillas delanteras</p>
+                </div>
+                <div class="timeline-meta">
+                    <div class="date">07 feb 2026</div>
+                    <span class="badge badge-blue">Reparación</span>
+                </div>
+            </div>
+
+            <div class="timeline-month">Enero 2026</div>
+
+            <div class="timeline-item">
+                <div class="timeline-icon icon-ok">✅</div>
+                <div class="timeline-body">
+                    <h4>Revisión general — Chevrolet Spark</h4>
+                    <p>Técnico: Keimer Martínez · Placa: XYZ-5678 · Km: 42,800 · Sistema eléctrico revisado</p>
+                </div>
+                <div class="timeline-meta">
+                    <div class="date">21 ene 2026</div>
+                    <span class="badge badge-green">Operativo</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-icon icon-rep">📋</div>
+                <div class="timeline-body">
+                    <h4>Check List completo — Ford Ranger</h4>
+                    <p>Técnico: Luis Herrera · Placa: GHI-3456 · Km: 514,100 · Permiso de tránsito vencido</p>
+                </div>
+                <div class="timeline-meta">
+                    <div class="date">15 ene 2026</div>
+                    <span class="badge badge-yellow">Observación</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-icon icon-ok">✅</div>
+                <div class="timeline-body">
+                    <h4>Revisión de inicio de año — Honda Civic</h4>
+                    <p>Técnico: Ana Rodríguez · Placa: DEF-9012 · Km: 61,400 · Todo en orden</p>
+                </div>
+                <div class="timeline-meta">
+                    <div class="date">03 ene 2026</div>
+                    <span class="badge badge-green">Operativo</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('hamburgerBtn').classList.toggle('open');
+            document.getElementById('mobileMenu').classList.toggle('open');
+        }
+        function closeMobileMenu() {
+            document.getElementById('hamburgerBtn').classList.remove('open');
+            document.getElementById('mobileMenu').classList.remove('open');
+        }
+        document.addEventListener('click', function (e) {
+            const btn = document.getElementById('hamburgerBtn');
+            const menu = document.getElementById('mobileMenu');
+            if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                btn.classList.remove('open');
+                menu.classList.remove('open');
+            }
+        });
+        document.getElementById('loginModal').addEventListener('click', function (e) {
+            if (e.target === this) this.classList.remove('open');
+        });
+    </script>
+</body>
+
+</html>
