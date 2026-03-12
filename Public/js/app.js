@@ -113,5 +113,5 @@ function switchTab(tab, el) {
 
 // Agregar auto
 function agregarAuto() {
-  window.location.href = 'agregar-auto.html';
+  window.location.href = 'Public/html/agregar-auto.html';
 }

@@ -5,21 +5,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Check List Vehículo - Flota de Autos</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="agregar-auto.css">
-  <link rel="stylesheet" href="forms.css"> 
+  <link rel="stylesheet" href="../Css/style.css">
+  <link rel="stylesheet" href="../Css/agregar-auto.css">
+  <link rel="stylesheet" href="../Css/forms.css"> 
 </head>
 
 <body>
 
   <!-- ── HEADER ── -->
   <header class="main-header">
-    <a href="index.html" class="header-brand">
+    <a href="../../index.html" class="header-brand">
       <div class="brand-logo">🚗</div>
       <span class="brand-name">Flota<span>Pro</span></span>
     </a>
     <div class="header-actions">
-      <a href="index.html" class="btn-back-header">
+      <a href="../../index.html" class="btn-back-header">
         ←
         <span class="back-text">Volver al dashboard</span>
       </a>
@@ -208,7 +208,7 @@
 
     <!-- ACCIONES -->
     <div class="form-actions">
-      <a href="index.html" class="btn-cancel">Cancelar</a>
+      <a href="../../index.html" class="btn-cancel">Cancelar</a>
       <button class="btn-email" onclick="enviarReporte()">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round">
@@ -294,7 +294,7 @@
         return;
       }
       showToast('✅ Check List guardado exitosamente');
-      setTimeout(() => window.location.href = 'index.html', 1800);
+      setTimeout(() => window.location.href = '../../index.html', 1800);
     }
 
     // ── Enviar correo ──

@@ -43,11 +43,18 @@ function validarCampos() {
 });
 
 // Guardar auto y volver al dashboard
-function guardarAuto() {
-  if (!validarCampos()) {
+async function guardarAuto() {
+  if (!validarCampos()) return;
+
+  // 1. Obtener el token del usuario logueado
+  const user = firebase.auth().currentUser;
+  if (!user) {
+    alert("Debes iniciar sesión para guardar un vehículo.");
     return;
   }
+  const token = await user.getIdToken();
 
+  // 2. Recolectar los datos del formulario (ya lo tienes casi listo)
   const auto = {
     nombre:      document.getElementById('nombre').value.trim(),
     placa:       document.getElementById('placa').value.trim(),
@@ -56,19 +63,33 @@ function guardarAuto() {
     anio:        document.getElementById('anio').value,
     color:       document.getElementById('color').value.trim(),
     estado:      document.querySelector('input[name="estado"]:checked').value,
-    motor:       document.getElementById('motor').value,
-    frenos:      document.getElementById('frenos').value,
-    neumaticos:  document.getElementById('neumaticos').value,
-    combustible: document.getElementById('combustible').value,
+    // Estos son los sliders
+    salud_motor:      document.getElementById('motor').value,
+    salud_frenos:     document.getElementById('frenos').value,
+    salud_neumaticos: document.getElementById('neumaticos').value,
+    combustible:      document.getElementById('combustible').value,
   };
 
-  console.log('Auto guardado:', auto);
+  try {
+    // 3. ENVIAR A PYTHON
+    const response = await fetch('http://127.0.0.1:5000/api/guardar-auto', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // <--- Aquí va la seguridad
+      },
+      body: JSON.stringify(auto)
+    });
 
-  // Mostrar toast y redirigir
-  const toast = document.getElementById('toast');
-  toast.classList.add('show');
-
-  setTimeout(() => {
-    window.location.href = 'index.html';
-  }, 1800);
+    if (response.ok) {
+      alert("✅ Vehículo guardado correctamente en la flota");
+      window.location.href = 'index.html';
+    } else {
+      const errorData = await response.json();
+      alert("Error al guardar: " + errorData.error);
+    }
+  } catch (error) {
+    console.error("Error de conexión:", error);
+    alert("No se pudo conectar con el servidor backend.");
+  }
 }

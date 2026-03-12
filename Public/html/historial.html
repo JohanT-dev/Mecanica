@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historial — FlotaPro</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="Historial.css">
+    <link rel="stylesheet" href="../Css/style.css">
+    <link rel="stylesheet" href="../Css/Historial.css">
 
 </head>
 
@@ -14,17 +14,17 @@
 
     <!-- HEADER -->
     <header class="main-header">
-        <a href="index.html" class="header-brand">
+        <a href="../../index.html" class="header-brand">
             <div class="brand-logo">🚗</div>
             <span class="brand-name">Flota<span>Pro</span></span>
         </a>
         <nav class="header-nav">
-            <a href="index.html" class="nav-link">Dashboard</a>
+            <a href="../../index.html" class="nav-link">Dashboard</a>
             <a href="reportes.html" class="nav-link">Reportes</a>
             <a href="historial.html" class="nav-link active">Historial</a>
         </nav>
         <div class="header-actions">
-            <button class="btn-login" onclick="document.getElementById('loginModal').classList.add('open')">
+            <button class="btn-login" onclick="window.location.href='Public/html/Login.html'">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
                     stroke-linecap="round">
                     <circle cx="12" cy="8" r="4" />
@@ -48,12 +48,12 @@
 
     <!-- MOBILE DRAWER -->
     <nav class="mobile-menu" id="mobileMenu">
-        <a href="index.html" class="nav-link-mobile">🏠 Dashboard</a>
+        <a href="../../index.html" class="nav-link-mobile">🏠 Dashboard</a>
         <a href="reportes.html" class="nav-link-mobile">📊 Reportes</a>
         <a href="historial.html" class="nav-link-mobile active">🕓 Historial</a>
         <div class="menu-divider"></div>
         <button class="btn-login-mobile"
-            onclick="closeMobileMenu(); document.getElementById('loginModal').classList.add('open')">
+            onclick="window.location.href='Public/html/Login.html'">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
                 stroke-linecap="round">
                 <circle cx="12" cy="8" r="4" />
@@ -71,21 +71,6 @@
         </a>
     </nav>
 
-    <!-- MODAL LOGIN -->
-    <div class="modal-overlay" id="loginModal">
-        <div class="modal">
-            <h2>🔐 Iniciar sesión</h2>
-            <p>Accede a tu flota de vehículos</p>
-            <div class="modal-field"><label>Correo electrónico</label><input type="email"
-                    placeholder="correo@empresa.com"></div>
-            <div class="modal-field"><label>Contraseña</label><input type="password" placeholder="••••••••"></div>
-            <div class="modal-actions">
-                <button class="btn-modal-cancel"
-                    onclick="document.getElementById('loginModal').classList.remove('open')">Cancelar</button>
-                <button class="btn-modal-submit">Entrar →</button>
-            </div>
-        </div>
-    </div>
 
     <div class="shell">
         <div class="page-title-block">
@@ -279,6 +264,9 @@
             if (e.target === this) this.classList.remove('open');
         });
     </script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="../js/authHandler.js"></script> 
 </body>
 
 </html>
