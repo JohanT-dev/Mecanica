@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,9 @@
   <link rel="stylesheet" href="Public/Css/style.css">
   <link rel="stylesheet" href="Public/Css/header.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
- 
+
 </head>
+
 <body>
 
   <!-- ── HEADER PROFESIONAL ── -->
@@ -17,26 +19,34 @@
       <div class="brand-logo">🚗</div>
       <span class="brand-name">Flota<span>Pro</span></span>
     </a>
-  
+
     <!-- Nav — solo desktop -->
     <nav class="header-nav">
       <a href="index.html" class="nav-link active">Dashboard</a>
       <a href="Public/html/reportes.html" class="nav-link">Reportes</a>
       <a href="Public/html/historial.html" class="nav-link">Historial</a>
     </nav>
-  
+
     <!-- Acciones — solo desktop -->
     <div class="header-actions">
       <button class="btn-login" id="btn-auth-desktop" onclick="window.location.href='Public/html/Login.html'">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round">
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+        </svg>
         <span>Iniciar sesión</span>
-    </button>
+      </button>
       <a href="Public/html/agregar-auto.html" class="btn-add-header">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"
+          stroke-linecap="round">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
         Agregar Auto
       </a>
     </div>
-  
+
     <!-- Hamburguesa — solo móvil -->
     <button class="btn-hamburger" id="hamburgerBtn" onclick="toggleMenu()">
       <span class="bar"></span>
@@ -44,7 +54,7 @@
       <span class="bar"></span>
     </button>
   </header>
-  
+
   <!-- MOBILE MENU DRAWER -->
   <nav class="mobile-menu" id="mobileMenu">
     <a href="index.html" class="nav-link-mobile active">🏠 Dashboard</a>
@@ -52,180 +62,134 @@
     <a href="Public/html/historial.html" class="nav-link-mobile">🕓 Historial</a>
     <div class="menu-divider"></div>
     <button class="btn-login-mobile" onclick="window.location.href='Public/html/Login.html'">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+        stroke-linecap="round">
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+      </svg>
       Iniciar sesión
     </button>
     <a href="Public/html/agregar-auto.html" class="btn-add-mobile" onclick="closeMobileMenu()">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"
+        stroke-linecap="round">
+        <line x1="12" y1="5" x2="12" y2="19" />
+        <line x1="5" y1="12" x2="19" y2="12" />
+      </svg>
       Agregar Auto
     </a>
   </nav>
 
 
+  <main class="shell">
+    <section class="charts-container">
 
-  <div class="shell">
-    <!-- STATS -->
-    <section class="stats-grid">
-      <div class="stat-card">
-        <span class="stat-icon" style="color:#22c55e">✅</span>
-        <div><div class="stat-value">2</div><div class="stat-label">Operativos</div></div>
+      <div class="card chart-box">
+        <div class="card-header">
+          <span class="dot urgent"></span>
+          <h3>Reparaciones Urgentes</h3>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="urgentRepairsChart"></canvas>
+        </div>
+        <p class="chart-footer">Autos con fallas críticas detectadas</p>
       </div>
-      <div class="stat-card">
-        <span class="stat-icon" style="color:#f59e0b">🔧</span>
-        <div><div class="stat-value">1</div><div class="stat-label">En mantenimiento</div></div>
-      </div>
-      <div class="stat-card">
-        <span class="stat-icon" style="color:#ef4444">⚠️</span>
-        <div><div class="stat-value">1</div><div class="stat-label">Fuera de servicio</div></div>
-      </div>
-    </section>
 
-    <section class="tabs">
-      <button class="tab active" onclick="switchTab('graficos', this)">Gráficos</button>
-      <button class="tab" onclick="switchTab('lista', this)">Lista de Autos</button>
-    </section>
-
-    <!-- GRÁFICOS VIEW -->
-    <section id="graficos-view">
-      <div class="charts-row">
-        <div class="card">
+      <div class="card chart-box">
+        <div class="card-header">
+          <span class="dot fleet"></span>
           <h3>Estado General de la Flota</h3>
-          <canvas id="donutChart" height="220"></canvas>
-          <div class="donut-legend">
-            <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div> Operativo</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div> Mantenimiento</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div> Fuera de servicio</div>
-          </div>
         </div>
-        <div class="card">
-          <h3>Salud Promedio por Componente</h3>
-          <canvas id="barChart" height="220"></canvas>
+        <div class="chart-wrapper">
+          <canvas id="fleetStatusChart"></canvas>
         </div>
+        <p class="chart-footer">Distribución total de unidades</p>
       </div>
 
-      <div class="card fuel-card">
-        <h3>Nivel de Combustible por Auto</h3>
-        <canvas id="fuelChart" height="130"></canvas>
-      </div>
+    </section>
+    <div class="tabs-container">
+      <button class="tab-btn active" onclick="openTab(event, 'tab-graficos')">📊 Gráficos</button>
+      <button class="tab-btn" onclick="openTab(event, 'tab-flota')">🚗 Lista de Flota</button>
+    </div>
 
-      <div>
-        <div class="individual-title">Estado Individual por Auto</div>
-        <div class="autos-grid">
-          <div class="auto-card">
-            <h4>Auto 01</h4>
-            <p>ABC-1234 · Toyota Corolla</p>
-            <canvas id="radar1" height="180"></canvas>
+    <section id="tab-graficos" class="tab-content active">
+      <div class="charts-container">
+
+        <div class="card chart-box">
+          <div class="card-header">
+            <span class="dot urgent"></span>
+            <h3>Top 5: Mayor Incidencia</h3>
           </div>
-          <div class="auto-card">
-            <h4>Auto 02</h4>
-            <p>XYZ-5678 · Chevrolet Spark</p>
-            <canvas id="radar2" height="180"></canvas>
+          <div class="chart-wrapper">
+            <canvas id="topProblematicCarsChart"></canvas>
           </div>
-          <div class="auto-card">
-            <h4>Auto 03</h4>
-            <p>DEF-9012 · Honda Civic</p>
-            <canvas id="radar3" height="180"></canvas>
-          </div>
-          <div class="auto-card" style="grid-column:1;">
-            <h4>Auto 04</h4>
-            <p>GHI-3456 · Ford Ranger</p>
-            <canvas id="radar4" height="180"></canvas>
-          </div>
+          <p class="chart-footer">Unidades con más reparaciones</p>
         </div>
+
+        <div class="card chart-box">
+          <div class="card-header">
+            <span class="dot success"></span>
+            <h3>Top 5: Mejor Rendimiento</h3>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="topEfficientCarsChart"></canvas>
+          </div>
+          <p class="chart-footer">Mayor kilometraje con menos fallas</p>
+        </div>
+
       </div>
     </section>
 
-    <!-- LISTA VIEW -->
-    <section id="list-view" style="display:none">
-      <div class="autos-list">
-        <div class="auto-row">
-          <div class="auto-row-info"><h4>Auto 01 - Toyota Corolla</h4><p>ABC-1234</p></div>
-          <span class="status-badge badge-operativo">Operativo</span>
-          <div class="fuel-bar-wrap">
-            <div class="fuel-bar-bg"><div class="fuel-bar-fill" style="width:75%;background:#22c55e"></div></div>
-            <span class="fuel-text">75%</span>
-          </div>
+
+    <section id="tab-flota" class="tab-content">
+      <div class="search-bar-container">
+        <div class="search-input-wrapper">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <input type="text" id="searchInput" placeholder="Buscar por placa, modelo o marca..." onkeyup="filterFleet()">
         </div>
-        <div class="auto-row">
-          <div class="auto-row-info"><h4>Auto 02 - Chevrolet Spark</h4><p>XYZ-5678</p></div>
-          <span class="status-badge badge-mantenimiento">En mantenimiento</span>
-          <div class="fuel-bar-wrap">
-            <div class="fuel-bar-bg"><div class="fuel-bar-fill" style="width:30%;background:#f59e0b"></div></div>
-            <span class="fuel-text">30%</span>
+      </div>
+
+      <div class="fleet-grid" id="fleetGrid">
+        <div class="auto-card">
+          <div class="auto-info">
+            <h4>Toyota Corolla</h4>
+            <span class="plate">ABC-1234</span>
+            <span class="badge badge-operativo">Operativo</span>
           </div>
-        </div>
-        <div class="auto-row">
-          <div class="auto-row-info"><h4>Auto 03 - Honda Civic</h4><p>DEF-9012</p></div>
-          <span class="status-badge badge-operativo">Operativo</span>
-          <div class="fuel-bar-wrap">
-            <div class="fuel-bar-bg"><div class="fuel-bar-fill" style="width:90%;background:#22c55e"></div></div>
-            <span class="fuel-text">90%</span>
-          </div>
-        </div>
-        <div class="auto-row">
-          <div class="auto-row-info"><h4>Auto 04 - Ford Ranger</h4><p>GHI-3456</p></div>
-          <span class="status-badge badge-fuera">Fuera de servicio</span>
-          <div class="fuel-bar-wrap">
-            <div class="fuel-bar-bg"><div class="fuel-bar-fill" style="width:10%;background:#ef4444"></div></div>
-            <span class="fuel-text">10%</span>
-          </div>
+          <a href="Public/html/actualizar-estado.html?placa=ABC-1234" class="btn-update-status">
+            Actualizar Estado
+        </a>
         </div>
       </div>
     </section>
-  </div>
+  </main>
 
-  <script src="Public/js/app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
-<script>
-  // Pega aquí los datos que copiaste de la consola
-  const firebaseConfig = {
-  apiKey: "AIzaSyDIscuvYzPkfLje72y0onQq4MRlRuyaEkg",
-  authDomain: "registro-de-flota.firebaseapp.com",
-  projectId: "registro-de-flota",
-  storageBucket: "registro-de-flota.firebasestorage.app",
-  messagingSenderId: "80030689118",
-  appId: "1:80030689118:web:be30ce41f5f650534591cf",
-  measurementId: "G-13BHCBJXKM"
-};
-  firebase.initializeApp(firebaseConfig);
-</script>
-  <script>
-    function switchTab(tab, el) {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      el.classList.add('active');
-      document.getElementById('graficos-view').style.display = tab === 'graficos' ? '' : 'none';
-      document.getElementById('list-view').style.display     = tab === 'lista'    ? '' : 'none';
-    }
-  
-    function toggleMenu() {
-      document.getElementById('hamburgerBtn').classList.toggle('open');
-      document.getElementById('mobileMenu').classList.toggle('open');
-    }
-  
-    function closeMobileMenu() {
-      document.getElementById('hamburgerBtn').classList.remove('open');
-      document.getElementById('mobileMenu').classList.remove('open');
-    }
-  
-    // Cerrar al tocar fuera del menú
-    document.addEventListener('click', function(e) {
-      const btn  = document.getElementById('hamburgerBtn');
-      const menu = document.getElementById('mobileMenu');
-      if (!btn.contains(e.target) && !menu.contains(e.target)) {
-        btn.classList.remove('open');
-        menu.classList.remove('open');
-      }
-    });
-  
-    // Cerrar modal al click en overlay
-    document.getElementById('loginModal').addEventListener('click', function(e) {
-      if (e.target === this) this.classList.remove('open');
-    });
-  </script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  
+  <script>
+    // Inicialización global (necesaria para AuthHandler)
+    const firebaseConfig = {
+      apiKey: "AIzaSyDIscuvYzPkfLje72y0onQq4MRlRuyaEkg",
+      authDomain: "registro-de-flota.firebaseapp.com",
+      projectId: "registro-de-flota",
+      storageBucket: "registro-de-flota.firebasestorage.app",
+      messagingSenderId: "80030689118",
+      appId: "1:80030689118:web:be30ce41f5f650534591cf"
+    };
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+  </script>
+
   <script src="Public/js/authHandler.js"></script>
+  <script type="module" src="Public/js/app.js"></script>
 </body>
+</html>
+</body>
+
 </html>

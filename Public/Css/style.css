@@ -1,74 +1,232 @@
-/* RESET Y VARIABLES */
-:root {
-  --bg: #0d1b2e;
-  --bg-card: #152035;
-  --text: #e8edf5;
-  --text-muted: #7a8ba0;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  margin: 0;
-  font-family: 'Segoe UI', Arial, sans-serif;
-}
-
-.shell {
-  padding: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* TARJETAS DE ESTADÍSTICA */
-.stats-grid {
+/* ── CONTENEDOR DE GRÁFICOS ── */
+.charts-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  /* 2 columnas si hay espacio, 1 en móvil */
+  gap: 24px;
+  margin-top: 20px;
 }
 
-.stat-card {
-  background: var(--bg-card);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.stat-value {
-  font-size: 1.8rem;
-  font-weight: 800;
-  display: block;
-}
-
-.stat-label {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-}
-
-/* GRÁFICOS */
-.charts-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 20px;
-}
-
+/* Tarjeta base (Clase repetida eliminada, ahora unificada) */
 .card {
   background: var(--bg-card);
-  border-radius: 18px;
+  /* #152035 */
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
   padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.card-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Indicadores de color */
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.urgent {
+  background: #ff4d4d;
+  box-shadow: 0 0 10px rgba(255, 77, 77, 0.4);
+}
+
+.fleet {
+  background: #4f8ef7;
+}
+
+.chart-wrapper {
+  position: relative;
+  height: 280px;
+  /* Altura fija para orden */
+  width: 100%;
+}
+
+.chart-footer {
+  margin-top: 15px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ── ESTILOS DE TABS ── */
+.tabs-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
+  padding-top: 20px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+  border-radius: 8px;
+}
+
+.tab-btn.active {
+  background: rgba(79, 142, 247, 0.1);
+  color: #4f8ef7;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}
+
+/* ── BARRA DE BÚSQUEDA ── */
+.search-bar-container {
+  margin-bottom: 25px;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 15px;
+  border-radius: 12px;
+  gap: 10px;
+}
+
+.search-input-wrapper input {
+  background: transparent;
+  border: none;
+  color: white;
+  width: 100%;
+  outline: none;
+}
+
+/* ── TARJETAS DE FLOTA ── */
+.fleet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.auto-card {
+  background: var(--bg-card);
+  padding: 20px;
+  border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-canvas {
-  width: 100% !important;
-  height: auto !important;
+.plate {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 4px 0;
 }
 
-@media (max-width: 600px) {
-  .charts-row {
-    grid-template-columns: 1fr;
+.btn-update-status {
+  background: #1a2a42;
+  color: #4f8ef7;
+  border: 1px solid rgba(79, 142, 247, 0.3);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: 0.2s;
+}
+
+.btn-update-status:hover {
+  background: #4f8ef7;
+  color: white;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Ajuste en style.css */
+.chart-wrapper {
+  position: relative;
+  height: 320px; /* Aumentamos un poco la altura para dar espacio a las 5 barras y sus etiquetas */
+  width: 100%;
+}
+.charts-container {
+  display: grid;
+  /* Ajuste para que las 3 tarjetas quepan bien */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Punto indicador verde para los eficientes */
+.dot.success { 
+  background: #22c55e; 
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.4); 
+}
+.checklist-modal {
+  max-width: 600px; /* Más ancho para las tablas */
+  max-height: 90vh; /* Para que no se salga de la pantalla */
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-body {
+  overflow-y: auto; /* Scroll interno */
+  padding-right: 10px;
+  margin-top: 15px;
+}
+
+.check-table-mini {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin-bottom: 15px;
+}
+
+.check-table-mini th { color: var(--text-muted); text-align: left; padding: 5px; }
+.check-table-mini td { padding: 8px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+.form-section-mini h4 {
+  font-size: 0.9rem;
+  color: var(--purple);
+  margin-bottom: 10px;
+  border-left: 3px solid var(--purple);
+  padding-left: 8px;
+}
+
+.status-options-mini {
+  display: flex;
+  justify-content: space-around;
+  background: #0d1b2e;
+  padding: 10px;
+  border-radius: 8px;
 }

@@ -1,136 +1,59 @@
+import { db } from './firebase-config.js';
+import { collection, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-// DONUT - Estado General de la Flota
-new Chart(document.getElementById('donutChart'), {
-  type: 'doughnut',
-  data: {
-    labels: ['Operativo', 'Mantenimiento', 'Fuera de servicio'],
-    datasets: [{
-      data: [2, 1, 1],
-      backgroundColor: ['#22c55e', '#f59e0b', '#ef4444'],
-      borderWidth: 0,
-      hoverOffset: 8
-    }]
-  },
-  options: {
-    cutout: '62%',
-    plugins: {
-      legend: { display: false },
-      tooltip: { callbacks: { label: (c) => ` ${c.label}: ${c.raw}` } }
-    }
-  }
-});
+let fleetStatusChart;
 
-// BAR - Salud Promedio por Componente
-new Chart(document.getElementById('barChart'), {
-  type: 'bar',
-  data: {
-    labels: ['Motor', 'Frenos', 'Neumáticos'],
-    datasets: [{
-      data: [55, 77, 55],
-      backgroundColor: '#7c72e8',
-      borderRadius: 6,
-      barPercentage: 0.5
-    }]
-  },
-  options: {
-    plugins: { legend: { display: false } },
-    scales: {
-      y: { min: 0, max: 100, grid: { color: '#f0f0f0' }, ticks: { color: '#aaa' } },
-      x: { grid: { display: false }, ticks: { color: '#aaa' } }
-    }
-  }
-});
-
-// BAR - Nivel de Combustible por Auto
-new Chart(document.getElementById('fuelChart'), {
-  type: 'bar',
-  data: {
-    labels: ['Auto 01', 'Auto 02', 'Auto 03', 'Auto 04'],
-    datasets: [{
-      data: [75, 30, 90, 10],
-      backgroundColor: ['#22c55e', '#f59e0b', '#22c55e', '#ef4444'],
-      borderRadius: 6,
-      barPercentage: 0.5
-    }]
-  },
-  options: {
-    plugins: {
-      legend: { display: false },
-      tooltip: { callbacks: { label: (c) => ` combustible: ${c.raw}%` } }
-    },
-    scales: {
-      y: { min: 0, max: 100, ticks: { callback: v => v + '%', color: '#aaa' }, grid: { color: '#f0f0f0' } },
-      x: { grid: { display: false }, ticks: { color: '#aaa' } }
-    }
-  }
-});
-
-// RADAR - Estado Individual por Auto
-function makeRadar(id, data) {
-  new Chart(document.getElementById(id), {
-    type: 'radar',
+// Inicialización de gráficos
+function initCharts() {
+  const ctx2 = document.getElementById('fleetStatusChart').getContext('2d');
+  fleetStatusChart = new Chart(ctx2, {
+    type: 'doughnut',
     data: {
-      labels: ['Motor', 'Frenos', 'Neumáticos', 'Combustible'],
+      labels: ['Operativos', 'Taller', 'Baja'],
       datasets: [{
-        data: data,
-        backgroundColor: 'rgba(108, 92, 231, 0.2)',
-        borderColor: '#6c5ce7',
-        pointBackgroundColor: '#6c5ce7',
-        borderWidth: 2
+        data: [0, 0, 0],
+        backgroundColor: ['#22c55e', '#eab308', '#ef4444']
       }]
     },
-    options: {
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: (c) => ` valor: ${c.raw}` } }
-      },
-      scales: {
-        r: {
-          min: 0, max: 100,
-          ticks: { display: false },
-          grid: { color: '#e5e7eb' },
-          pointLabels: { font: { size: 11 }, color: '#888' }
-        }
-      }
-    }
+    options: { responsive: true, maintainAspectRatio: false }
   });
 }
 
-makeRadar('radar1', [65, 80, 70, 75]);
-makeRadar('radar2', [40, 30, 35, 30]);
-makeRadar('radar3', [90, 85, 80, 90]);
-makeRadar('radar4', [20, 15, 25, 10]);
-
-// Cambiar entre pestañas
-function switchTab(tab, el) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('graficos-view').style.display = tab === 'graficos' ? 'block' : 'none';
-  document.getElementById('list-view').style.display = tab === 'lista' ? 'block' : 'none';
+function actualizarGraficas(operativos, taller, criticos) {
+  if (fleetStatusChart) {
+    fleetStatusChart.data.datasets[0].data = [operativos, taller, criticos];
+    fleetStatusChart.update();
+  }
 }
 
-// Agregar auto
-function agregarAuto() {
-  window.location.href = 'Public/html/agregar-auto.html';
-}
-const user = firebase.auth().currentUser;
+// En app.js
+function cargarDashboard() {
+  onSnapshot(collection(db, "Vehiculos"), (snapshot) => {
+      const contenedor = document.getElementById('fleetGrid'); // ID que usaste en el HTML
+      if (!contenedor) return;
+      contenedor.innerHTML = ""; 
 
-if (user) {
-  // Escuchador en tiempo real
-  db.collection('autos')
-    .where('propietario_id', '==', user.uid)
-    .onSnapshot((snapshot) => {
-      // Esta función se ejecuta CADA VEZ que algo cambia en la base de datos
-      const autos = [];
       snapshot.forEach((doc) => {
-        autos.push({ id: doc.id, ...doc.data() });
+          const auto = doc.data();
+          const id = doc.id; 
+
+          contenedor.innerHTML += `
+              <div class="auto-card">
+                  <div class="auto-info">
+                      <h4>${auto.modelo || 'Sin Modelo'}</h4>
+                      <span class="plate">${id}</span>
+                      <span class="badge badge-${auto.estadoActual}">${auto.estadoActual}</span>
+                  </div>
+                  <a href="Public/html/actualizar.html?placa=${id}" class="btn-update-status">
+                      Actualizar Estado
+                  </a>
+              </div>`;
       });
-
-      console.log("Datos actualizados:", autos);
-
-      // AQUÍ llamas a tus funciones que dibujan los gráficos y la lista
-      actualizarInterfaz(autos);
-    }, (error) => {
-      console.error("Error en tiempo real:", error);
-    });
+  });
 }
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  initCharts();
+  cargarDashboard();
+});

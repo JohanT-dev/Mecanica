@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inspección Técnica - FlotaPro</title>
+    <link rel="stylesheet" href="../Css/style.css">
+    <link rel="stylesheet" href="../Css/header.css">
+    <link rel="stylesheet" href="../Css/forms.css"> </head>
+<body>
+
+    <header class="main-header">
+        <a href="../../index.html" class="header-brand">
+            <div class="brand-logo">🚗</div>
+            <span class="brand-name">Flota<span>Pro</span></span>
+        </a>
+        <div class="header-actions">
+            <a href="../../index.html" class="btn-login" style="text-decoration: none;">
+                ← Volver al Dashboard
+            </a>
+        </div>
+    </header>
+
+    <main class="page-wrap">
+        <div class="page-title-block">
+            <h1>📋 Inspección Integral</h1>
+            <p>Vehículo: <span id="placa-vehiculo" style="color: #4f8ef7; font-weight: 800;">---</span></p>
+        </div>
+    
+        <form id="form-inspeccion">
+            <section class="form-section">
+                <h2>🚀 Recorrido y Control</h2>
+                <div class="form-grid">
+                    <div class="field">
+                        <label>Kilometraje Actual</label>
+                        <input type="number" id="km-input" placeholder="Ej: 516667" required>
+                    </div>
+                    <div class="field">
+                        <label>Fecha de Inspección</label>
+                        <input type="datetime-local" id="fecha-inspeccion">
+                    </div>
+                </div>
+            </section>
+    
+            <section class="form-section">
+                <h2>⚡ Sistema Eléctrico y Fluidos</h2>
+                <table class="check-table">
+                    <thead>
+                        <tr>
+                            <th>Componente</th>
+                            <th class="th-bueno">Bueno</th>
+                            <th class="th-regular">Regular</th>
+                            <th class="th-malo">Malo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-electrico"></tbody>
+                </table>
+            </section>
+    
+            <section class="form-section">
+                <h2>🧰 Accesorios e Indispensables</h2>
+                <table class="check-table">
+                    <thead>
+                        <tr>
+                            <th>Accesorio</th>
+                            <th class="th-bueno">Bueno</th>
+                            <th class="th-regular">Regular</th>
+                            <th class="th-malo">Malo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-accesorios"></tbody>
+                </table>
+            </section>
+    
+            <section class="form-section">
+                <h2>🚗 Estructura Externa</h2>
+                <table class="check-table">
+                    <thead>
+                        <tr>
+                            <th>Elemento</th>
+                            <th class="th-bueno">Bueno</th>
+                            <th class="th-regular">Regular</th>
+                            <th class="th-malo">Malo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-externa"></tbody>
+                </table>
+            </section>
+    
+            <section class="form-section">
+                <h2>🚦 Dictamen Final</h2>
+                <div class="status-options">
+                    <label class="status-option operativo">
+                        <input type="radio" name="estado-final" value="operativo" checked>
+                        <span>✅</span>
+                        <span class="status-label">Operativo</span>
+                    </label>
+                    <label class="status-option mantenimiento">
+                        <input type="radio" name="estado-final" value="mantenimiento">
+                        <span>🔧</span>
+                        <span class="status-label">Mantenimiento</span>
+                    </label>
+                    <label class="status-option fuera">
+                        <input type="radio" name="estado-final" value="fuera">
+                        <span>⚠️</span>
+                        <span class="status-label">Fuera de Servicio</span>
+                    </label>
+                </div>
+                <div class="field full" style="margin-top: 20px;">
+                    <label>Observaciones del Técnico</label>
+                    <textarea id="obs-tecnicas" placeholder="Describa fallas o reparaciones necesarias..."></textarea>
+                </div>
+            </section>
+    
+            <div class="form-actions">
+                <a href="../../index.html" class="btn-cancel">Cancelar</a>
+                <button type="submit" class="btn-submit">💾 Guardar Reporte Completo</button>
+            </div>
+        </form>
+    </main>
+
+    <script src="../Js/actualizar.js"></script>
+</body>
+</html>

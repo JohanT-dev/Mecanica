@@ -138,3 +138,23 @@
     .header-nav, .header-actions { display: none; }
     .btn-hamburger { display: flex; }
   }
+  /* RESET Y VARIABLES */
+:root {
+  --bg: #0d1b2e;
+  --bg-card: #152035;
+  --text: #e8edf5;
+  --text-muted: #7a8ba0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.shell {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
