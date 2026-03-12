@@ -1,5 +1,3 @@
-JS
-Copiar
 
 // DONUT - Estado General de la Flota
 new Chart(document.getElementById('donutChart'), {
@@ -114,4 +112,25 @@ function switchTab(tab, el) {
 // Agregar auto
 function agregarAuto() {
   window.location.href = 'Public/html/agregar-auto.html';
+}
+const user = firebase.auth().currentUser;
+
+if (user) {
+  // Escuchador en tiempo real
+  db.collection('autos')
+    .where('propietario_id', '==', user.uid)
+    .onSnapshot((snapshot) => {
+      // Esta función se ejecuta CADA VEZ que algo cambia en la base de datos
+      const autos = [];
+      snapshot.forEach((doc) => {
+        autos.push({ id: doc.id, ...doc.data() });
+      });
+
+      console.log("Datos actualizados:", autos);
+
+      // AQUÍ llamas a tus funciones que dibujan los gráficos y la lista
+      actualizarInterfaz(autos);
+    }, (error) => {
+      console.error("Error en tiempo real:", error);
+    });
 }
