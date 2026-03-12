@@ -184,6 +184,45 @@
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }
+
+    // Función principal para cambiar entre pestañas
+function openTab(evt, tabName) {
+    // 1. Ocultar todos los contenidos de las pestañas
+    const tabcontent = document.getElementsByClassName("tab-content");
+    for (let i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].classList.remove("active");
+        tabcontent[i].style.display = "none";
+    }
+
+    // 2. Quitar la clase 'active' de todos los botones
+    const tablinks = document.getElementsByClassName("tab-btn");
+    for (let i = 0; i < tablinks.length; i++) {
+        tablinks[i].classList.remove("active");
+    }
+
+    // 3. Mostrar la pestaña actual y añadir clase active al botón
+    const activeTab = document.getElementById(tabName);
+    activeTab.style.display = "block";
+    setTimeout(() => activeTab.classList.add("active"), 10); // Pequeño delay para la animación CSS
+    
+    evt.currentTarget.classList.add("active");
+
+    // 4. IMPORTANTE: Forzar a Chart.js a redibujar los gráficos
+    // Si no haces esto, al volver a la pestaña de gráficos se verán aplastados o vacíos
+    if (tabName === 'tab-graficos') {
+        window.dispatchEvent(new Event('resize'));
+    }
+}
+
+// Inicialización por defecto al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    // Aseguramos que la primera pestaña esté visible
+    const firstTab = document.getElementById('tab-graficos');
+    if(firstTab) {
+        firstTab.style.display = "block";
+        firstTab.classList.add("active");
+    }
+});
   </script>
 
   <script src="Public/js/authHandler.js"></script>
