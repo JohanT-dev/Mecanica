@@ -6,6 +6,64 @@ import {
     updateDoc, 
     serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+// ── Datos de las tablas según el PDF ──
+const electricoItems = [
+    'Aceite de Freno', 'Aceite de Motor', 'Agua / Coolant',
+    'Agua de reserva del Limpia Parabrisas', 'Aceite de Powerstering',
+    'Escobillas', 'Batería',
+    'Encendido de Luz Delantera Derecha', 'Encendido de Luz Delantera Izquierda',
+    'Encendido de Direccional Derecha Delantera', 'Encendido de Direccional Izquierda Delantera',
+    'Encendido de Luz Trasera Derecha', 'Encendido de Luz Trasera Izquierda',
+    'Encendido de Direccional Trasera Derecha', 'Encendido de Direccional Trasera Izquierda',
+    'Luces Intermitentes', 'Luces Altas', 'Luces Bajas',
+    'Indicadores de Tablero', 'Temperatura', 'Combustible', 'Frenos'
+  ];
+
+  const accesoriosItems = [
+    'Llanta de Repuesto', 'Triángulo', 'Inversora', 'Pipeta',
+    'Gato Hidráulico', 'Extintor', 'Alarma'
+  ];
+
+  const externaItems = [
+    'Puerta Lateral Derecha', 'Puerta Lateral Izquierda', 'Llantas',
+    'Espejos', 'Parabrisa', 'Vidrio Lateral Derecho', 'Vidrio Lateral Izquierdo',
+    'Vidrio Trasero', 'Puerta trasera o Maletero', 'Tapa de Motor',
+    'Tapicería', 'Estado de Carrocería (Golpes/Rayones)'
+  ];
+
+  function buildTable(items, tbodyId) {
+    const tbody = document.getElementById(tbodyId);
+    items.forEach((item, i) => {
+      const id = tbodyId + '_' + i;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${item}</td>
+        <td><input type="radio" class="radio-pill radio-bueno"   name="${id}" value="bueno" ></td>
+        <td><input type="radio" class="radio-pill radio-regular" name="${id}" value="regular"></td>
+        <td><input type="radio" class="radio-pill radio-malo"    name="${id}" value="malo"></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  buildTable(electricoItems, 'electrico-tbody');
+  buildTable(accesoriosItems, 'accesorios-tbody');
+  buildTable(externaItems, 'externa-tbody');
+
+  // Set default datetime
+  const now = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  document.getElementById('fecha').value =
+    `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+
+  // ── Toast ──
+  function showToast(msg, color = '#22c55e') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.background = color;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
 
 // Configuración de IDs de tablas para el barrido automático
 const TABLAS_INSPECCION = ['electrico', 'accesorios', 'externa'];
