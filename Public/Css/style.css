@@ -173,34 +173,41 @@
     transform: translateY(0);
   }
 }
+
 /* Ajuste en style.css */
 .chart-wrapper {
   position: relative;
-  height: 320px; /* Aumentamos un poco la altura para dar espacio a las 5 barras y sus etiquetas */
+  height: 320px;
+  /* Aumentamos un poco la altura para dar espacio a las 5 barras y sus etiquetas */
   width: 100%;
 }
+
 .charts-container {
   display: grid;
   /* Ajuste para que las 3 tarjetas quepan bien */
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
   margin-top: 20px;
 }
 
 /* Punto indicador verde para los eficientes */
-.dot.success { 
-  background: #22c55e; 
-  box-shadow: 0 0 10px rgba(34, 197, 94, 0.4); 
+.dot.success {
+  background: #22c55e;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
 }
+
 .checklist-modal {
-  max-width: 600px; /* Más ancho para las tablas */
-  max-height: 90vh; /* Para que no se salga de la pantalla */
+  max-width: 600px;
+  /* Más ancho para las tablas */
+  max-height: 90vh;
+  /* Para que no se salga de la pantalla */
   display: flex;
   flex-direction: column;
 }
 
 .modal-body {
-  overflow-y: auto; /* Scroll interno */
+  overflow-y: auto;
+  /* Scroll interno */
   padding-right: 10px;
   margin-top: 15px;
 }
@@ -212,8 +219,16 @@
   margin-bottom: 15px;
 }
 
-.check-table-mini th { color: var(--text-muted); text-align: left; padding: 5px; }
-.check-table-mini td { padding: 8px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.check-table-mini th {
+  color: var(--text-muted);
+  text-align: left;
+  padding: 5px;
+}
+
+.check-table-mini td {
+  padding: 8px 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
 
 .form-section-mini h4 {
   font-size: 0.9rem;
@@ -229,4 +244,39 @@
   background: #0d1b2e;
   padding: 10px;
   border-radius: 8px;
+}
+
+/* Colores de badges según estado */
+.badge-operativo {
+  background: #22c55e;
+  color: white;
+  border-radius: 30px;
+padding: 3px 5px 5px 5px;
+}
+
+.badge-mantenimiento {
+  background: #eab308;
+  color: black;
+}
+
+.badge-critico {
+  background: #ef4444;
+  color: white;
+}
+
+.badge-fuera {
+  background: #64748b;
+  color: white;
+}
+
+.auto-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: var(--card-bg);
+  /* O el color que uses */
+  border-radius: 12px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }

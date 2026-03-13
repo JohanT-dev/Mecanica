@@ -53,191 +53,44 @@
   </nav>
 
   <div class="shell">
-    <div class="page-title-block">
-      <h1>📊 Reportes de Flota</h1>
-      <p>Análisis de rendimiento, salud y estado general de todos los vehículos</p>
-    </div>
-
-    <!-- PERIOD + EXPORT -->
-    <div class="period-bar">
-      <div class="period-tabs">
-        <button class="period-tab" onclick="setPeriod(this)">7 días</button>
-        <button class="period-tab active" onclick="setPeriod(this)">1 mes</button>
-        <button class="period-tab" onclick="setPeriod(this)">3 meses</button>
-        <button class="period-tab" onclick="setPeriod(this)">1 año</button>
-      </div>
-      <button class="btn-export">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Exportar PDF
-      </button>
-    </div>
-
-    <!-- KPIs -->
-    <div class="kpi-row">
-      <div class="kpi-card">
-        <div class="kpi-icon">🚗</div>
-        <div class="kpi-value">4</div>
-        <div class="kpi-label">Vehículos activos</div>
-        <div class="kpi-trend trend-up">↑ Sin cambios</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-icon">📋</div>
-        <div class="kpi-value">12</div>
-        <div class="kpi-label">Revisiones este mes</div>
-        <div class="kpi-trend trend-up">↑ +3 vs mes anterior</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-icon">⚠️</div>
-        <div class="kpi-value">2</div>
-        <div class="kpi-label">Alertas activas</div>
-        <div class="kpi-trend trend-down">↓ Requieren atención</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-icon">💯</div>
-        <div class="kpi-value" style="color:#4ade80">76%</div>
-        <div class="kpi-label">Salud promedio flota</div>
-        <div class="kpi-trend trend-up">↑ +4% vs mes anterior</div>
-      </div>
-    </div>
-
-    <!-- CHARTS ROW 1 -->
-    <div class="charts-2col">
-      <div class="report-card">
-        <h3>📈 Tendencia de Salud por Vehículo</h3>
-        <canvas id="lineChart" height="220"></canvas>
-      </div>
-      <div class="report-card">
-        <h3>🔧 Tipos de Intervención</h3>
-        <canvas id="interventionChart" height="220"></canvas>
-      </div>
-    </div>
-
-    <!-- CHART ROW 2 -->
-    <div class="charts-1col">
-      <div class="report-card">
-        <h3>🚗 Puntuación de Salud por Vehículo</h3>
-        <table class="vehicle-table">
-          <thead>
-            <tr>
-              <th>Vehículo</th>
-              <th>Placa</th>
-              <th>Técnico</th>
-              <th>Última revisión</th>
-              <th>Puntuación</th>
-              <th>Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Toyota Corolla</td>
-              <td>ABC-1234</td>
-              <td>Keimer Martínez</td>
-              <td>04 mar 2026</td>
-              <td>
-                <div class="score-bar-wrap">
-                  <div class="score-bar-bg"><div class="score-bar-fill" style="width:90%;background:#22c55e"></div></div>
-                  <span class="score-val" style="color:#4ade80">90%</span>
-                </div>
-              </td>
-              <td><span class="status-badge badge-operativo">Operativo</span></td>
-            </tr>
-            <tr>
-              <td>Chevrolet Spark</td>
-              <td>XYZ-5678</td>
-              <td>Ana Rodríguez</td>
-              <td>28 feb 2026</td>
-              <td>
-                <div class="score-bar-wrap">
-                  <div class="score-bar-bg"><div class="score-bar-fill" style="width:30%;background:#ef4444"></div></div>
-                  <span class="score-val" style="color:#f87171">30%</span>
-                </div>
-              </td>
-              <td><span class="status-badge badge-fuera">Fuera de servicio</span></td>
-            </tr>
-            <tr>
-              <td>Honda Civic</td>
-              <td>DEF-9012</td>
-              <td>Keimer Martínez</td>
-              <td>21 feb 2026</td>
-              <td>
-                <div class="score-bar-wrap">
-                  <div class="score-bar-bg"><div class="score-bar-fill" style="width:85%;background:#22c55e"></div></div>
-                  <span class="score-val" style="color:#4ade80">85%</span>
-                </div>
-              </td>
-              <td><span class="status-badge badge-operativo">Operativo</span></td>
-            </tr>
-            <tr>
-              <td>Ford Ranger</td>
-              <td>GHI-3456</td>
-              <td>Luis Herrera</td>
-              <td>02 mar 2026</td>
-              <td>
-                <div class="score-bar-wrap">
-                  <div class="score-bar-bg"><div class="score-bar-fill" style="width:55%;background:#f59e0b"></div></div>
-                  <span class="score-val" style="color:#fbbf24">55%</span>
-                </div>
-              </td>
-              <td><span class="status-badge badge-mantenimiento">Mantenimiento</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- CHARTS ROW 3 -->
-    <div class="charts-2col">
-      <div class="report-card">
-        <h3>⚡ Componentes con más fallas</h3>
-        <canvas id="failuresChart" height="220"></canvas>
-      </div>
-      <div class="report-card">
-        <h3>🚨 Alertas activas</h3>
-        <div class="alerts-grid">
-          <div class="alert-item">
-            <div class="alert-dot" style="background:#ef4444"></div>
-            <div>
-              <h4>Extintor vencido — Chevrolet Spark</h4>
-              <p>Placa XYZ-5678 · Detectado el 28 feb 2026 · Requiere reemplazo inmediato</p>
-            </div>
+    <div class="report-container">
+      <div class="report-card status-bueno">
+          <h3>✅ BUENO</h3>
+          <div class="count" id="count-bueno">0</div>
+          <p>Autos registrados</p>
+          <div class="last-added">
+              Último añadido: <span id="last-bueno">--</span>
           </div>
-          <div class="alert-item">
-            <div class="alert-dot" style="background:#ef4444"></div>
-            <div>
-              <h4>Llanta de repuesto en mal estado — Chevrolet Spark</h4>
-              <p>Placa XYZ-5678 · Detectado el 28 feb 2026 · Riesgo de seguridad vial</p>
-            </div>
-          </div>
-          <div class="alert-item">
-            <div class="alert-dot" style="background:#f59e0b"></div>
-            <div>
-              <h4>Permiso de tránsito por vencer — Ford Ranger</h4>
-              <p>Placa GHI-3456 · Vence el 15 mar 2026 · Renovar antes de esa fecha</p>
-            </div>
-          </div>
-          <div class="alert-item">
-            <div class="alert-dot" style="background:#f59e0b"></div>
-            <div>
-              <h4>Tapicería en estado regular — Toyota Corolla</h4>
-              <p>Placa ABC-1234 · Detectado el 14 feb 2026 · Revisión recomendada</p>
-            </div>
-          </div>
-        </div>
       </div>
-    </div>
-
+  
+      <div class="report-card status-regular">
+          <h3>🔧 REGULAR</h3>
+          <div class="count" id="count-regular">0</div>
+          <p>Autos registrados</p>
+          <div class="last-added">
+              Último añadido: <span id="last-regular">--</span>
+          </div>
+      </div>
+  
+      <div class="report-card status-malo">
+          <h3>⚠️ MALO</h3>
+          <div class="count" id="count-malo">0</div>
+          <p>Autos registrados</p>
+          <div class="last-added">
+              Último añadido: <span id="last-malo">--</span>
+          </div>
+      </div>
+  </div>
   </div>
 
   <tbody id="tabla-reportes-body">
   </tbody>
 
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-<script>
-  // Inicializar igual que en el index
-  firebase.initializeApp(firebaseConfig); 
-</script>
-<script src="../js/authHandler.js"></script>
-<script type="module" src="../js/reportes.js"></script>
+  <script type="module" src="../js/firebase-config.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+  
+  <script type="module" src="../js/Reportes.js"></script>
 </body>
 </html>

@@ -1,35 +1,34 @@
-import { db } from './firebase-config.js'; 
+import { db } from './firebase-config.js';
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-// Lógica visual de sliders y selects (la mantenemos igual)
-window.updateSlider = (id) => {
-    const input = document.getElementById(id);
-    document.getElementById('val-' + id).textContent = input.value + '%';
-    document.getElementById('bar-' + id).style.width = input.value + '%';
-};
+const form = document.getElementById('form-agregar-auto');
 
-const formAgregar = document.getElementById('form-registro-vehiculo');
-if (formAgregar) {
-    formAgregar.addEventListener('submit', async (e) => {
+if (form) {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const placa = document.getElementById('placa').value.toUpperCase().trim();
-        const auto = {
-            marca: document.getElementById('marca').value,
-            modelo: document.getElementById('modelo').value,
-            anio: document.getElementById('anio').value,
-            salud_motor: document.getElementById('motor').value,
-            estadoActual: 'operativo',
-            fechaRegistro: new Date().toISOString()
-        };
+        const placa = document.getElementById('placa').value.toUpperCase();
+        const marca = document.getElementById('marca').value;
+        const modelo = document.getElementById('modelo').value;
+        const año = document.getElementById('anio').value;
 
         try {
-            await setDoc(doc(db, "Vehiculos", placa), auto);
-            alert("✅ Vehículo guardado en Firebase");
-            window.location.href = '../../index.html';
+            // Usamos la PLACA como ID del documento para que sea única
+            await setDoc(doc(db, "Vehiculos", placa), {
+                placa: placa,
+                marca: marca,
+                modelo: modelo,
+                anio: parseInt(año),
+                estadoActual: "operativo", // Estado inicial por defecto
+                ultimoKilometraje: 0,
+                fechaRegistro: new Date().toISOString()
+            });
+
+            alert("🚗 Vehículo registrado con éxito");
+            window.location.href = "../../index.html";
         } catch (error) {
-            console.error(error);
-            alert("Error al guardar");
+            console.error("Error al agregar auto:", error);
+            alert("Hubo un error al guardar el vehículo.");
         }
     });
 }

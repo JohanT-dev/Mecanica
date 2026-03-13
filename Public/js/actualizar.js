@@ -1,55 +1,114 @@
 import { db } from './firebase-config.js';
 import { collection, addDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-const dataChecklist = {
-    electrico: ['Aceite de Motor', 'Batería', 'Luces', 'Frenos'],
-    externa: ['Llantas', 'Espejos', 'Carrocería']
+const itemsConfig = {
+    electrico: [
+        'Aceite de Freno', 'Aceite de Motor', 'Agua / Coolant', 'Agua de reserva del Limpia Parabrisas',
+        'Aceite de Powerstering', 'Escobillas', 'Batería', 'Luz Delantera Derecha', 
+        'Luz Delantera Izquierda', 'Direccionales', 'Luces Intermitentes', 'Frenos'
+    ],
+    accesorios: ['Llanta de Repuesto', 'Triángulo', 'Inversora', 'Pipeta', 'Gato Hidráulico', 'Extintor'],
+    externa: ['Puertas Laterales', 'Llantas', 'Espejos', 'Parabrisa', 'Tapicería', 'Carrocería']
 };
 
-function generarTablas() {
-    Object.keys(dataChecklist).forEach(seccion => {
+document.addEventListener('DOMContentLoaded', () => {
+    generarTablasUI();
+    configurarDatosIniciales();
+    document.getElementById('form-inspeccion').addEventListener('submit', manejarGuardadoCompleto);
+});
+
+function generarTablasUI() {
+    Object.entries(itemsConfig).forEach(([seccion, items]) => {
         const contenedor = document.getElementById(`tabla-${seccion}`);
         if (!contenedor) return;
-        dataChecklist[seccion].forEach((item, index) => {
+        items.forEach((item, index) => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${item}</td>
-                <td class="td-radio"><input type="radio" name="${seccion}_${index}" value="B" class="radio-pill radio-bueno" checked></td>
-                <td class="td-radio"><input type="radio" name="${seccion}_${index}" value="R" class="radio-pill radio-regular"></td>
-                <td class="td-radio"><input type="radio" name="${seccion}_${index}" value="M" class="radio-pill radio-malo"></td>`;
+                <td class="td-radio"><input type="radio" name="${seccion}_${index}" value="B" required></td>
+                <td class="td-radio"><input type="radio" name="${seccion}_${index}" value="R"></td>
+                <td class="td-radio"><input type="radio" name="${seccion}_${index}" value="M"></td>
+            `;
             contenedor.appendChild(tr);
         });
     });
 }
 
-const formInspeccion = document.getElementById('form-inspeccion');
-if (formInspeccion) {
-    formInspeccion.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const placa = document.getElementById('placa-vehiculo').innerText;
-        const resultados = {};
-        
-        formInspeccion.querySelectorAll('.radio-pill:checked').forEach(radio => {
-            const nombreItem = radio.closest('tr').cells[0].innerText;
-            resultados[nombreItem] = radio.value;
-        });
-
-        try {
-            await addDoc(collection(db, "Inspecciones"), {
-                placa,
-                checklist: resultados,
-                fecha: new Date().toISOString()
-            });
-            await updateDoc(doc(db, "Vehiculos", placa), { 
-                estadoActual: document.querySelector('input[name="estado-final"]:checked').value 
-            });
-            window.location.href = '../../index.html';
-        } catch (err) { alert("Error al guardar"); }
-    });
+function configurarDatosIniciales() {
+    const params = new URLSearchParams(window.location.search);
+    const placa = params.get('placa') || "PROTOTIPO";
+    document.getElementById('placa-vehiculo').innerText = placa;
+    document.getElementById('fecha-inspeccion').value = new Date().toISOString().slice(0, 16);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    generarTablas();
-    const placa = new URLSearchParams(window.location.search).get('placa');
-    if(placa) document.getElementById('placa-vehiculo').innerText = placa;
-});
+async function manejarGuardadoCompleto(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.btn-submit');
+    btn.disabled = true;
+    btn.innerText = "Procesando...";
+
+    const placa = document.getElementById('placa-vehiculo').innerText;
+    const km = document.getElementById('km-input').value;
+    const obs = document.getElementById('obs-tecnicas').value;
+
+    // Recopilar estados para Firebase y PDF
+    const detallesPorSeccion = { electrico: {}, accesorios: {}, externa: {} };
+    Object.keys(itemsConfig).forEach(seccion => {
+        const filas = document.getElementById(`tabla-${seccion}`).querySelectorAll('tr');
+        filas.forEach(fila => {
+            const nombre = fila.cells[0].innerText;
+            const valor = fila.querySelector('input[type="radio"]:checked')?.value || "N/A";
+            detallesPorSeccion[seccion][nombre] = valor;
+        });
+    });
+
+    const payload = {
+        fecha: new Date().toLocaleString(),
+        tecnico: "Johny", // Puedes capturar esto de un input
+        vehiculo: "4x4",
+        placa: placa,
+        kilometraje: km,
+        detalles: detallesPorSeccion,
+        observaciones: obs,
+        documentacion: {
+            "Registro Vehicular": document.getElementById('reg_vehicular')?.checked || true,
+            "Póliza de Seguro": document.getElementById('poliza')?.checked || true
+        }
+    };
+
+    try {
+        // 1. Guardar en Firebase
+        await addDoc(collection(db, "Inspecciones"), {
+            ...payload,
+            fechaISO: new Date().toISOString()
+        });
+        
+        await updateDoc(doc(db, "Vehiculos", placa), {
+            ultimoKilometraje: parseInt(km),
+            fechaUltimaRevision: new Date().toISOString()
+        });
+
+        // 2. Generar PDF con Python
+        const response = await fetch('http://localhost:5000/api/generar-pdf', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `CheckList_${placa}.pdf`;
+            a.click();
+        }
+
+        alert("✅ Guardado con éxito y PDF descargado.");
+        window.location.href = "index.html";
+    } catch (err) {
+        console.error(err);
+        alert("Error al procesar. Verifique que el servidor de Python esté activo.");
+        btn.disabled = false;
+    }
+}

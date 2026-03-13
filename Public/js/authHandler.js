@@ -6,7 +6,7 @@ firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         const nombreCorto = user.email.split('@')[0];
         const texto = `Salir (${nombreCorto})`;
-        
+
         if (btnDesktop) {
             btnDesktop.querySelector('span').textContent = texto;
             btnDesktop.onclick = () => firebase.auth().signOut();
@@ -20,7 +20,7 @@ firebase.auth().onAuthStateChanged((user) => {
             btnDesktop.querySelector('span').textContent = "Iniciar sesión";
             btnDesktop.onclick = () => window.location.href = 'Public/html/Login.html';
         }
-        
+
         // PROTECCIÓN DE RUTAS
         const paginasPrivadas = ['agregar-auto.html', 'actualizar.html'];
         if (paginasPrivadas.some(p => window.location.pathname.includes(p))) {

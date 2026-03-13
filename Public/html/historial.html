@@ -51,8 +51,7 @@
         <a href="reportes.html" class="nav-link-mobile">📊 Reportes</a>
         <a href="historial.html" class="nav-link-mobile active">🕓 Historial</a>
         <div class="menu-divider"></div>
-        <button class="btn-login-mobile"
-            onclick="window.location.href='../html/Login.html'">
+        <button class="btn-login-mobile" onclick="window.location.href='../html/Login.html'">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
                 stroke-linecap="round">
                 <circle cx="12" cy="8" r="4" />
@@ -80,20 +79,10 @@
         <!-- RESUMEN -->
         <div class="summary-row">
             <div class="summary-card">
-                <div class="s-value">38</div>
+                <div class="s-value" id="count-total">0</div>
                 <div class="s-label">Revisiones totales</div>
             </div>
-            <div class="summary-card">
-                <div class="s-value" style="color:#4ade80">29</div>
-                <div class="s-label">En buen estado</div>
-            </div>
-            <div class="summary-card">
-                <div class="s-value" style="color:#fbbf24">6</div>
-                <div class="s-label">Con observaciones</div>
-            </div>
-            <div class="summary-card">
-                <div class="s-value" style="color:#f87171">3</div>
-                <div class="s-label">Requirieron reparación</div>
+            <div class="timeline" id="timeline-container">
             </div>
         </div>
 
@@ -123,149 +112,33 @@
 
         <!-- TIMELINE -->
         <div class="timeline">
-
-            <div class="timeline-month">Marzo 2026</div>
-
-            <div class="timeline-item">
-                <div class="timeline-icon icon-ok">✅</div>
-                <div class="timeline-body">
-                    <h4>Revisión general — Toyota Corolla</h4>
-                    <p>Técnico: Keimer Martínez · Placa: ABC-1234 · Km: 87,450 · Todos los sistemas en buen estado</p>
-                </div>
-                <div class="timeline-meta">
-                    <div class="date">04 mar 2026</div>
-                    <span class="badge badge-green">Operativo</span>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-icon icon-warn">🔧</div>
-                <div class="timeline-body">
-                    <h4>Mantenimiento preventivo — Ford Ranger</h4>
-                    <p>Técnico: Luis Herrera · Placa: GHI-3456 · Km: 516,667 · Cambio de aceite y filtros</p>
-                </div>
-                <div class="timeline-meta">
-                    <div class="date">02 mar 2026</div>
-                    <span class="badge badge-yellow">En mantenimiento</span>
-                </div>
-            </div>
-
-            <div class="timeline-month">Febrero 2026</div>
-
-            <div class="timeline-item">
-                <div class="timeline-icon icon-bad">⚠️</div>
-                <div class="timeline-body">
-                    <h4>Revisión — Chevrolet Spark</h4>
-                    <p>Técnico: Ana Rodríguez · Placa: XYZ-5678 · Km: 43,210 · Llanta de repuesto en mal estado,
-                        extintor vencido</p>
-                </div>
-                <div class="timeline-meta">
-                    <div class="date">28 feb 2026</div>
-                    <span class="badge badge-red">Fuera de servicio</span>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-icon icon-ok">✅</div>
-                <div class="timeline-body">
-                    <h4>Revisión general — Honda Civic</h4>
-                    <p>Técnico: Keimer Martínez · Placa: DEF-9012 · Km: 62,100 · Excelente condición general</p>
-                </div>
-                <div class="timeline-meta">
-                    <div class="date">21 feb 2026</div>
-                    <span class="badge badge-green">Operativo</span>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-icon icon-rep">📋</div>
-                <div class="timeline-body">
-                    <h4>Check List completo — Toyota Corolla</h4>
-                    <p>Técnico: Luis Herrera · Placa: ABC-1234 · Km: 86,980 · Tapicería en estado regular</p>
-                </div>
-                <div class="timeline-meta">
-                    <div class="date">14 feb 2026</div>
-                    <span class="badge badge-yellow">Observación</span>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-icon icon-warn">🔧</div>
-                <div class="timeline-body">
-                    <h4>Reparación de frenos — Ford Ranger</h4>
-                    <p>Técnico: Ana Rodríguez · Placa: GHI-3456 · Km: 515,200 · Reemplazo de pastillas delanteras</p>
-                </div>
-                <div class="timeline-meta">
-                    <div class="date">07 feb 2026</div>
-                    <span class="badge badge-blue">Reparación</span>
-                </div>
-            </div>
-
-            <div class="timeline-month">Enero 2026</div>
-
-            <div class="timeline-item">
-                <div class="timeline-icon icon-ok">✅</div>
-                <div class="timeline-body">
-                    <h4>Revisión general — Chevrolet Spark</h4>
-                    <p>Técnico: Keimer Martínez · Placa: XYZ-5678 · Km: 42,800 · Sistema eléctrico revisado</p>
-                </div>
-                <div class="timeline-meta">
-                    <div class="date">21 ene 2026</div>
-                    <span class="badge badge-green">Operativo</span>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-icon icon-rep">📋</div>
-                <div class="timeline-body">
-                    <h4>Check List completo — Ford Ranger</h4>
-                    <p>Técnico: Luis Herrera · Placa: GHI-3456 · Km: 514,100 · Permiso de tránsito vencido</p>
-                </div>
-                <div class="timeline-meta">
-                    <div class="date">15 ene 2026</div>
-                    <span class="badge badge-yellow">Observación</span>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-icon icon-ok">✅</div>
-                <div class="timeline-body">
-                    <h4>Revisión de inicio de año — Honda Civic</h4>
-                    <p>Técnico: Ana Rodríguez · Placa: DEF-9012 · Km: 61,400 · Todo en orden</p>
-                </div>
-                <div class="timeline-meta">
-                    <div class="date">03 ene 2026</div>
-                    <span class="badge badge-green">Operativo</span>
-                </div>
-            </div>
-
         </div>
-    </div>
 
-    <script>
-        function toggleMenu() {
-            document.getElementById('hamburgerBtn').classList.toggle('open');
-            document.getElementById('mobileMenu').classList.toggle('open');
-        }
-        function closeMobileMenu() {
-            document.getElementById('hamburgerBtn').classList.remove('open');
-            document.getElementById('mobileMenu').classList.remove('open');
-        }
-        document.addEventListener('click', function (e) {
-            const btn = document.getElementById('hamburgerBtn');
-            const menu = document.getElementById('mobileMenu');
-            if (!btn.contains(e.target) && !menu.contains(e.target)) {
-                btn.classList.remove('open');
-                menu.classList.remove('open');
+        <script>
+            function toggleMenu() {
+                document.getElementById('hamburgerBtn').classList.toggle('open');
+                document.getElementById('mobileMenu').classList.toggle('open');
             }
-        });
-        document.getElementById('loginModal').addEventListener('click', function (e) {
-            if (e.target === this) this.classList.remove('open');
-        });
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="../js/authHandler.js"></script> 
+            function closeMobileMenu() {
+                document.getElementById('hamburgerBtn').classList.remove('open');
+                document.getElementById('mobileMenu').classList.remove('open');
+            }
+            document.addEventListener('click', function (e) {
+                const btn = document.getElementById('hamburgerBtn');
+                const menu = document.getElementById('mobileMenu');
+                if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                    btn.classList.remove('open');
+                    menu.classList.remove('open');
+                }
+            });
+            document.getElementById('loginModal').addEventListener('click', function (e) {
+                if (e.target === this) this.classList.remove('open');
+            });
+        </script>
+        <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+        <script src="../js/authHandler.js"></script>
+        <script type="module" src="../js/Historial.js"></script>
 </body>
 
 </html>

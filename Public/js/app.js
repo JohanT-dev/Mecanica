@@ -26,18 +26,17 @@ function actualizarGraficas(operativos, taller, criticos) {
   }
 }
 
-// En app.js
 function cargarDashboard() {
   onSnapshot(collection(db, "Vehiculos"), (snapshot) => {
-      const contenedor = document.getElementById('fleetGrid'); // ID que usaste en el HTML
-      if (!contenedor) return;
-      contenedor.innerHTML = ""; 
+    const contenedor = document.getElementById('fleetGrid');
+    if (!contenedor) return;
+    contenedor.innerHTML = "";
 
-      snapshot.forEach((doc) => {
-          const auto = doc.data();
-          const id = doc.id; 
+    snapshot.forEach((doc) => {
+      const auto = doc.data();
+      const id = doc.id;
 
-          contenedor.innerHTML += `
+      contenedor.innerHTML += `
               <div class="auto-card">
                   <div class="auto-info">
                       <h4>${auto.modelo || 'Sin Modelo'}</h4>
@@ -48,7 +47,7 @@ function cargarDashboard() {
                       Actualizar Estado
                   </a>
               </div>`;
-      });
+    });
   });
 }
 
@@ -57,3 +56,24 @@ document.addEventListener('DOMContentLoaded', () => {
   initCharts();
   cargarDashboard();
 });
+// BUSCADOR EN TIEMPO REAL
+window.filterFleet = async function () {
+  const textoBusqueda = document.getElementById('searchInput').value.toUpperCase().trim();
+  const vehiculosRef = collection(db, "Vehiculos");
+
+  if (textoBusqueda === "") {
+    // Si está vacío, volvemos al modo "tiempo real" normal
+    cargarDashboard();
+    return;
+  }
+
+  // Buscamos específicamente por ID de documento (Placa)
+  // Nota: Firebase solo permite búsquedas exactas o por prefijo con este método
+  try {
+    const q = query(vehiculosRef, where("__name__", ">=", textoBusqueda), where("__name__", "<=", textoBusqueda + '\uf8ff'));
+    const querySnapshot = await getDocs(q);
+    renderizarTarjetas(querySnapshot);
+  } catch (error) {
+    console.error("Error buscando:", error);
+  }
+}
