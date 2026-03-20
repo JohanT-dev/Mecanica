@@ -59,69 +59,8 @@
         </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
-    <script>
-        // 1. Inicializar Firebase (Usa tus credenciales aquí)
-        const firebaseConfig = {
-            apiKey: "AIzaSyDIscuvYzPkfLje72y0onQq4MRlRuyaEkg",
-            authDomain: "registro-de-flota.firebaseapp.com",
-            projectId: "registro-de-flota",
-            storageBucket: "registro-de-flota.firebasestorage.app",
-            messagingSenderId: "80030689118",
-            appId: "1:80030689118:web:be30ce41f5f650534591cf",
-            measurementId: "G-13BHCBJXKM"
-        };
-        firebase.initializeApp(firebaseConfig);
 
-        // 2. Lógica de UI para cambiar entre Login y Registro
-        function switchAuth(mode) {
-            const isLogin = mode === 'login';
-            document.getElementById('form-login').classList.toggle('hidden', !isLogin);
-            document.getElementById('form-register').classList.toggle('hidden', isLogin);
-            document.getElementById('tab-login').classList.toggle('active', isLogin);
-            document.getElementById('tab-register').classList.toggle('active', !isLogin);
-
-            document.getElementById('auth-title').textContent = isLogin ? "Bienvenido de nuevo" : "Crea tu cuenta";
-            document.getElementById('auth-subtitle').textContent = isLogin ? "Gestiona tu flota de vehículos" : "Empieza a organizar tus activos hoy";
-        }
-
-        // 3. Lógica central de Autenticación
-        async function handleAuth(e, mode) {
-            e.preventDefault();
-            const btn = e.target.querySelector('button');
-            btn.textContent = "Procesando...";
-            btn.disabled = true;
-
-            try {
-                if (mode === 'login') {
-                    const email = document.getElementById('login-email').value;
-                    const pass = document.getElementById('login-pass').value;
-                    await firebase.auth().signInWithEmailAndPassword(email, pass);
-                } else {
-                    const nombre = document.getElementById('reg-name').value;
-                    const email = document.getElementById('reg-email').value;
-                    const pass = document.getElementById('reg-pass').value;
-
-                    const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, pass);
-                    const token = await userCredential.user.getIdToken();
-
-                    // Registrar perfil en Python
-                    await fetch('http://127.0.0.1:5000/api/registrar-usuario', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ token, nombre })
-                    });
-                }
-                window.location.href = '../../index.html';
-            } catch (err) {
-                alert("Error: " + err.message);
-                btn.textContent = mode === 'login' ? "Entrar a FlotaPro →" : "Crear cuenta ahora";
-                btn.disabled = false;
-            }
-        }
-    </script>
 
 </body>
 

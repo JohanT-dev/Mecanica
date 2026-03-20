@@ -94,7 +94,7 @@
   color: #4f8ef7;
 }
 
-.btn-add-header {
+.btn-add-header ,.btn-add-mobile {
   background: linear-gradient(to bottom, #1b1c3f, #4a4e91);
   color: white;
   padding: 9px 18px;
@@ -190,4 +190,39 @@ body {
   padding: 24px;
   max-width: 1200px;
   margin: 0 auto;
+}
+/* ── CORRECCIÓN DE BOTONES MÓVILES ── */
+.mobile-menu .btn-login-mobile, 
+.mobile-menu .btn-add-mobile {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s;
+}
+
+/* Botón Iniciar Sesión (Estilo Contorno) */
+.btn-login-mobile {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #e8edf5 !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.menu-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+  margin: 20px 0 10px 0;
+}
+
+.btn-add-mobile{
+  max-width: 94%;
 }
